@@ -172,6 +172,21 @@ public class MaterialDialog extends Dialog {
     private final Context mContext;
     private int mTheme = 0;
     private boolean mScrollable = false;
+    private CharSequence title;
+    private CharSequence message;
+    private View view;
+
+    private CharSequence positiveText;
+    private OnClickListener positiveListener;
+    private OnClickDelegate positiveDelegate;
+
+    private CharSequence negativeText;
+    private OnClickListener negativeListener;
+    private OnClickDelegate negativeDelegate;
+
+    private CharSequence neutralText;
+    private OnClickListener neutralListener;
+    private OnClickDelegate neutralDelegate;
 
     public Builder(Context context) {
       mContext = context;
@@ -187,8 +202,9 @@ public class MaterialDialog extends Dialog {
      *
      * @param scrollable use scrollable layout variant
      */
-    public void setScrollable(boolean scrollable) {
+    public Builder setScrollable(boolean scrollable) {
       this.mScrollable = scrollable;
+      return this;
     }
 
     /**
@@ -199,13 +215,49 @@ public class MaterialDialog extends Dialog {
      * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Dark
      * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Light
      */
-    public void setTheme(int theme) {
+    public Builder setTheme(int theme) {
       this.mTheme = theme;
+      return this;
     }
 
     public MaterialDialog create() {
       MaterialDialog dialog = new MaterialDialog(mContext, mTheme, mScrollable);
-
+      if (title != null) {
+        dialog.setTitle(title);
+      }
+      if (message != null) {
+        dialog.setMessage(message);
+      }
+      if (view != null) {
+        dialog.setView(view);
+      }
+      if (positiveText != null) {
+        if (positiveDelegate != null) {
+          dialog.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveDelegate);
+        } else if (positiveListener != null) {
+          dialog.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveListener);
+        } else {
+          dialog.setButton(DialogInterface.BUTTON_POSITIVE, positiveText);
+        }
+      }
+      if (negativeText != null) {
+        if (negativeDelegate != null) {
+          dialog.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, negativeDelegate);
+        } else if (negativeListener != null) {
+          dialog.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText, negativeListener);
+        } else {
+          dialog.setButton(DialogInterface.BUTTON_NEGATIVE, negativeText);
+        }
+      }
+      if (neutralText != null) {
+        if (neutralDelegate != null) {
+          dialog.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText, neutralDelegate);
+        } else if (neutralListener != null) {
+          dialog.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText, neutralListener);
+        } else {
+          dialog.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText);
+        }
+      }
       return dialog;
     }
 
@@ -213,6 +265,116 @@ public class MaterialDialog extends Dialog {
       MaterialDialog dialog = create();
       dialog.show();
       return dialog;
+    }
+
+    public Builder setTitle(int titleId) {
+      return setTitle(mContext.getText(titleId));
+    }
+
+    public Builder setTitle(CharSequence title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder setMessage(int messageId) {
+      return setMessage(mContext.getText(messageId));
+    }
+
+    public Builder setMessage(CharSequence message) {
+      this.message = message;
+      return this;
+    }
+
+    public Builder setView(View view) {
+      this.view = view;
+      return this;
+    }
+
+    public Builder setPositiveButton(int textId) {
+      return setPositiveButton(mContext.getText(textId));
+    }
+
+    public Builder setPositiveButton(CharSequence text) {
+      this.positiveText = text;
+      return this;
+    }
+
+    public Builder setPositiveButton(CharSequence text, OnClickListener listener) {
+      this.positiveText = text;
+      this.positiveListener = listener;
+      return this;
+    }
+
+    public Builder setPositiveButton(int textId, OnClickListener listener) {
+      return setPositiveButton(mContext.getText(textId), listener);
+    }
+
+    public Builder setPositiveButton(CharSequence text, OnClickDelegate delegate) {
+      this.positiveText = text;
+      this.positiveDelegate = delegate;
+      return this;
+    }
+
+    public Builder setPositiveButton(int textId, OnClickDelegate delegate) {
+      return setPositiveButton(mContext.getText(textId), delegate);
+    }
+
+    public Builder setNegativeButton(int textId) {
+      return setNegativeButton(mContext.getText(textId));
+    }
+
+    public Builder setNegativeButton(CharSequence text) {
+      this.negativeText = text;
+      return this;
+    }
+
+    public Builder setNegativeButton(CharSequence text, OnClickListener listener) {
+      this.negativeText = text;
+      this.negativeListener = listener;
+      return this;
+    }
+
+    public Builder setNegativeButton(int textId, OnClickListener listener) {
+      return setNegativeButton(mContext.getText(textId), listener);
+    }
+
+    public Builder setNegativeButton(CharSequence text, OnClickDelegate delegate) {
+      this.negativeText = text;
+      this.negativeDelegate = delegate;
+      return this;
+    }
+
+    public Builder setNegativeButton(int textId, OnClickDelegate delegate) {
+      return setNegativeButton(mContext.getText(textId), delegate);
+    }
+
+    public Builder setNeutralButton(int textId) {
+      return setNeutralButton(mContext.getText(textId));
+    }
+
+    public Builder setNeutralButton(CharSequence text) {
+      this.neutralText = text;
+      return this;
+    }
+
+    public Builder setNeutralButton(CharSequence text, OnClickListener listener) {
+      this.neutralText = text;
+      this.neutralListener = listener;
+      return this;
+    }
+
+    public Builder setNeutralButton(int textId, OnClickListener listener) {
+      return setNeutralButton(mContext.getText(textId), listener);
+    }
+
+    public Builder setNeutralButton(CharSequence text, OnClickDelegate delegate) {
+      this.neutralText = text;
+      this.neutralDelegate = delegate;
+      return this;
+    }
+
+    public Builder setNeutralButton(int textId, OnClickDelegate delegate) {
+      return setNeutralButton(mContext.getText(textId), delegate);
     }
   }
 }
