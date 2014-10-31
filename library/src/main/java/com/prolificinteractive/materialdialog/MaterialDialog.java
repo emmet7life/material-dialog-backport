@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.util.TypedValue;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -167,7 +168,7 @@ public class MaterialDialog extends Dialog {
     public boolean onClick(MaterialDialog dialog, int which);
   }
 
-  public static class Builder {
+  public static final class Builder {
 
     private final Context mContext;
     private int mTheme = 0;
@@ -188,13 +189,28 @@ public class MaterialDialog extends Dialog {
     private OnClickListener neutralListener;
     private OnClickDelegate neutralDelegate;
 
+    private OnCancelListener onCancelListener;
+    private OnDismissListener onDismissListener;
+    private OnKeyListener onKeyListener;
+
     public Builder(Context context) {
-      mContext = context;
+      this(context, 0);
     }
 
+    /**
+     * @param context Context
+     * @param theme Style resource to use for the dialog theme
+     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog
+     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Dark
+     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Light
+     */
     public Builder(Context context, int theme) {
+      this.mTheme = getDialogTheme(context, theme);
       this.mContext = context;
-      this.mTheme = theme;
+    }
+
+    public Context getContext() {
+      return new ContextThemeWrapper(mContext, mTheme);
     }
 
     /**
@@ -204,19 +220,6 @@ public class MaterialDialog extends Dialog {
      */
     public Builder setScrollable(boolean scrollable) {
       this.mScrollable = scrollable;
-      return this;
-    }
-
-    /**
-     * Set the theme of the dialog. Default is Light
-     *
-     * @param theme Style resource to use for the dialog theme
-     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog
-     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Dark
-     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Light
-     */
-    public Builder setTheme(int theme) {
-      this.mTheme = theme;
       return this;
     }
 
@@ -258,6 +261,11 @@ public class MaterialDialog extends Dialog {
           dialog.setButton(DialogInterface.BUTTON_NEUTRAL, neutralText);
         }
       }
+
+      dialog.setOnCancelListener(onCancelListener);
+      dialog.setOnDismissListener(onDismissListener);
+      dialog.setOnKeyListener(onKeyListener);
+
       return dialog;
     }
 
@@ -375,6 +383,18 @@ public class MaterialDialog extends Dialog {
 
     public Builder setNeutralButton(int textId, OnClickDelegate delegate) {
       return setNeutralButton(mContext.getText(textId), delegate);
+    }
+
+    public void setOnCancelListener(OnCancelListener onCancelListener) {
+      this.onCancelListener = onCancelListener;
+    }
+
+    public void setOnDismissListener(OnDismissListener onDismissListener) {
+      this.onDismissListener = onDismissListener;
+    }
+
+    public void setOnKeyListener(OnKeyListener onKeyListener) {
+      this.onKeyListener = onKeyListener;
     }
   }
 }

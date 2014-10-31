@@ -61,12 +61,11 @@ public class MainActivity extends Activity {
 
     findViewById(R.id.button_material_custom_theme).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
-        new MaterialDialog.Builder(MainActivity.this)
+        new MaterialDialog.Builder(MainActivity.this, R.style.MaterialDialog_Dark)
             .setTitle("Test Title")
             .setMessage("Test Message")
             .setPositiveButton(android.R.string.ok)
             .setNegativeButton(android.R.string.cancel)
-            .setTheme(R.style.MaterialDialog_Dark)
             .show();
       }
     });
