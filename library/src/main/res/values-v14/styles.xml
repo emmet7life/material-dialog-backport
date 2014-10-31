@@ -13,7 +13,7 @@
     <item name="android:textSize">14sp</item>
   </style>
 
-  <style name="Button">
+  <style name="Widget.MaterialDialog.Button" parent="Widget.MaterialDialog">
     <item name="android:minWidth">88dp</item>
     <item name="android:minHeight">36dp</item>
     <item name="android:gravity">center</item>
@@ -23,7 +23,7 @@
     <item name="android:textAllCaps">true</item>
   </style>
 
-  <style name="Button.Positive" parent="Button">
+  <style name="Widget.MaterialDialog.Button.Positive" parent="Widget.MaterialDialog.Button">
     <item name="android:textColor">@color/mdb__button_primary</item>
   </style>
 

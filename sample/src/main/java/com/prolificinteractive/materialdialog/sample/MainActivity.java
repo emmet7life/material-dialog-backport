@@ -1,6 +1,7 @@
 package com.prolificinteractive.materialdialog.sample;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,13 +16,24 @@ public class MainActivity extends Activity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+    findViewById(R.id.button_system).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        new AlertDialog.Builder(MainActivity.this)
+            .setTitle("Test Title")
+            .setMessage("This is a test message")
+            .setPositiveButton("OK", null)
+            .setNegativeButton("Cancel", null)
+            .show();
+      }
+    });
+
+    findViewById(R.id.button_material_basic).setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View v) {
         MaterialDialog dialog = new MaterialDialog(MainActivity.this);
         dialog.setTitle("Test Title");
         dialog.setMessage("This is a test message");
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", null);
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", null);
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK");
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel");
         dialog.show();
       }
     });

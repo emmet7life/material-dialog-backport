@@ -3,7 +3,7 @@ package com.prolificinteractive.materialdialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
@@ -50,14 +50,7 @@ public class MaterialDialog extends Dialog {
 
   @Override public void setTitle(CharSequence title) {
     this.title.setText(title);
-  }
-
-  public void setIcon(int iconId) {
-    setIcon(getContext().getResources().getDrawable(iconId));
-  }
-
-  public void setIcon(Drawable icon) {
-    //TODO set title icon?
+    this.title.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
   }
 
   public void setMessage(int messageId) {
@@ -66,6 +59,7 @@ public class MaterialDialog extends Dialog {
 
   public void setMessage(CharSequence message) {
     this.message.setText(message);
+    this.message.setVisibility(TextUtils.isEmpty(message) ? View.GONE : View.VISIBLE);
   }
 
   public void setView(View view) {
@@ -73,7 +67,41 @@ public class MaterialDialog extends Dialog {
     customContainer.addView(view);
   }
 
+  public void setButton(final int id, CharSequence buttonText) {
+    setButton(id, buttonText, new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        dismiss();
+      }
+    });
+  }
+
   public void setButton(final int id, CharSequence buttonText, final OnClickListener listener) {
+    setButton(id, buttonText, new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        if (listener != null) {
+          listener.onClick(MaterialDialog.this, id);
+        }
+        dismiss();
+      }
+    });
+  }
+
+  public void setButton(final int id, CharSequence buttonText, final OnClickDelegate delegate) {
+    setButton(id, buttonText, new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        boolean wasHandled = false;
+        if (delegate != null) {
+          wasHandled = delegate.onClick(MaterialDialog.this, id);
+        }
+        if (!wasHandled) {
+          dismiss();
+        }
+      }
+    });
+  }
+
+  private void setButton(final int id, CharSequence buttonText,
+      final View.OnClickListener listener) {
     Button button;
     switch (id) {
       case DialogInterface.BUTTON_POSITIVE:
@@ -89,15 +117,9 @@ public class MaterialDialog extends Dialog {
         throw new IllegalArgumentException("ID needs to be DialogInterface.BUTTON_*");
     }
 
+    button.setVisibility(View.VISIBLE);
     button.setText(buttonText);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        if (listener != null) {
-          listener.onClick(MaterialDialog.this, id);
-        }
-        dismiss();
-      }
-    });
+    button.setOnClickListener(listener);
   }
 
   private static int getDialogTheme(Context context, int theme) {
@@ -112,5 +134,17 @@ public class MaterialDialog extends Dialog {
     }
 
     return R.style.MaterialDialog_Light;
+  }
+
+  /**
+   * FIXME high level documentation needed
+   */
+  public static interface OnClickDelegate {
+    /**
+     * @param dialog the dialog with the button clicked
+     * @param which Which button was clicked
+     * @return if true, dialog will not automatically be dismissed
+     */
+    public boolean onClick(MaterialDialog dialog, int which);
   }
 }

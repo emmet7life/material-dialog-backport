@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:layout_width="match_parent"
+    android:minWidth="280dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     >
 
@@ -20,6 +21,7 @@
         android:textAppearance="?attr/textAppearanceMaterialDialogTitle"
         tools:text="Medium Text"
         android:id="@+id/mdb__title"
+        android:visibility="gone"
         />
 
     <TextView
@@ -28,6 +30,7 @@
         android:textAppearance="?attr/textAppearanceMaterialDialogMessage"
         tools:text="Small Text"
         android:id="@+id/mdb__message"
+        android:visibility="gone"
         />
 
     <FrameLayout
@@ -43,7 +46,8 @@
       android:layout_marginRight="@dimen/mdb__dialog_button_margin"
       android:layout_marginBottom="@dimen/mdb__dialog_button_margin"
       android:orientation="horizontal"
-      android:layout_width="match_parent"
+      android:layout_gravity="end"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       >
 
@@ -53,6 +57,7 @@
         android:layout_height="wrap_content"
         tools:text="Cancel"
         android:id="@+id/mdb__neutral"
+        android:visibility="gone"
         />
 
     <View
@@ -60,6 +65,7 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_weight="1"
+        android:visibility="gone"
         />
 
     <Button
@@ -68,6 +74,7 @@
         android:layout_height="wrap_content"
         tools:text="No"
         android:id="@+id/mdb__negative"
+        android:visibility="gone"
         />
 
     <Button
@@ -76,6 +83,7 @@
         android:layout_height="wrap_content"
         tools:text="OK"
         android:id="@+id/mdb__positive"
+        android:visibility="gone"
         />
 
   </LinearLayout>

@@ -3,8 +3,8 @@
   <style name="MaterialDialog.Dark" parent="android:Theme.Dialog">
     <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.Dialog.Title</item>
     <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.Dialog.Message</item>
-    <item name="materialDialogButton">@style/Button</item>
-    <item name="materialDialogButtonPositive">@style/Button.Positive</item>
+    <item name="materialDialogButton">@style/Widget.MaterialDialog.Button</item>
+    <item name="materialDialogButtonPositive">@style/Widget.MaterialDialog.Button.Positive</item>
   </style>
 
 
@@ -20,17 +20,18 @@
     <item name="android:textSize">14sp</item>
   </style>
 
-  <style name="Button">
+  <style name="Widget.MaterialDialog" parent="android:Widget" />
+
+  <style name="Widget.MaterialDialog.Button" parent="Widget.MaterialDialog">
     <item name="android:minWidth">88dp</item>
     <item name="android:minHeight">36dp</item>
     <item name="android:gravity">center</item>
     <item name="android:background">@drawable/mdb__dialog_button</item>
     <item name="android:textAppearance">@style/TextAppearance.Dialog.Button</item>
     <item name="android:textColor">?android:attr/textColorPrimary</item>
-    <item name="android:textAllCaps">true</item>
   </style>
 
-  <style name="Button.Positive" parent="Button">
+  <style name="Widget.MaterialDialog.Button.Positive" parent="Widget.MaterialDialog.Button">
     <item name="android:textColor">@color/mdb__button_primary</item>
   </style>
 

@@ -4,15 +4,15 @@
   <style name="MaterialDialog.Dark" parent="android:Theme.Material.Dialog">
     <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.Dialog.Title</item>
     <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.Dialog.Message</item>
-    <item name="materialDialogButton">@style/Button</item>
-    <item name="materialDialogButtonPositive">@style/Button.Positive</item>
+    <item name="materialDialogButton">@style/Widget.MaterialDialog.Button</item>
+    <item name="materialDialogButtonPositive">@style/Widget.MaterialDialog.Button.Positive</item>
   </style>
 
   <style name="MaterialDialog.Light" parent="android:Theme.Material.Light.Dialog">
     <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.Dialog.Title</item>
     <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.Dialog.Message</item>
-    <item name="materialDialogButton">@style/Button</item>
-    <item name="materialDialogButtonPositive">@style/Button.Positive</item>
+    <item name="materialDialogButton">@style/Widget.MaterialDialog.Button</item>
+    <item name="materialDialogButtonPositive">@style/Widget.MaterialDialog.Button.Positive</item>
   </style>
 
 </resources>
