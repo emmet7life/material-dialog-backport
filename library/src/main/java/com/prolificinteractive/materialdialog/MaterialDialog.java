@@ -192,6 +192,7 @@ public class MaterialDialog extends Dialog {
     private OnCancelListener onCancelListener;
     private OnDismissListener onDismissListener;
     private OnKeyListener onKeyListener;
+    private boolean cancelable;
 
     public Builder(Context context) {
       this(context, 0);
@@ -265,6 +266,7 @@ public class MaterialDialog extends Dialog {
       dialog.setOnCancelListener(onCancelListener);
       dialog.setOnDismissListener(onDismissListener);
       dialog.setOnKeyListener(onKeyListener);
+      dialog.setCancelable(cancelable);
 
       return dialog;
     }
@@ -385,16 +387,24 @@ public class MaterialDialog extends Dialog {
       return setNeutralButton(mContext.getText(textId), delegate);
     }
 
-    public void setOnCancelListener(OnCancelListener onCancelListener) {
+    public Builder setOnCancelListener(OnCancelListener onCancelListener) {
       this.onCancelListener = onCancelListener;
+      return this;
     }
 
-    public void setOnDismissListener(OnDismissListener onDismissListener) {
+    public Builder setOnDismissListener(OnDismissListener onDismissListener) {
       this.onDismissListener = onDismissListener;
+      return this;
     }
 
-    public void setOnKeyListener(OnKeyListener onKeyListener) {
+    public Builder setOnKeyListener(OnKeyListener onKeyListener) {
       this.onKeyListener = onKeyListener;
+      return this;
+    }
+
+    public Builder setCancelable(boolean cancelable) {
+      this.cancelable = cancelable;
+      return this;
     }
   }
 }
