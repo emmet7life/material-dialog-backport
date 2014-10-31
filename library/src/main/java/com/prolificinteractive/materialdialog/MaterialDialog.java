@@ -166,4 +166,53 @@ public class MaterialDialog extends Dialog {
      */
     public boolean onClick(MaterialDialog dialog, int which);
   }
+
+  public static class Builder {
+
+    private final Context mContext;
+    private int mTheme = 0;
+    private boolean mScrollable = false;
+
+    public Builder(Context context) {
+      mContext = context;
+    }
+
+    public Builder(Context context, int theme) {
+      this.mContext = context;
+      this.mTheme = theme;
+    }
+
+    /**
+     * Set the dialog to use scrollable variant
+     *
+     * @param scrollable use scrollable layout variant
+     */
+    public void setScrollable(boolean scrollable) {
+      this.mScrollable = scrollable;
+    }
+
+    /**
+     * Set the theme of the dialog. Default is Light
+     *
+     * @param theme Style resource to use for the dialog theme
+     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog
+     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Dark
+     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Light
+     */
+    public void setTheme(int theme) {
+      this.mTheme = theme;
+    }
+
+    public MaterialDialog create() {
+      MaterialDialog dialog = new MaterialDialog(mContext, mTheme, mScrollable);
+
+      return dialog;
+    }
+
+    public MaterialDialog show() {
+      MaterialDialog dialog = create();
+      dialog.show();
+      return dialog;
+    }
+  }
 }
