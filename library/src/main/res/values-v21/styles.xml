@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="MaterialDialog.Dark" parent="android:Theme.Material.Dialog">
+    <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.Dialog.Title</item>
+    <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.Dialog.Message</item>
+    <item name="materialDialogButton">@style/Button</item>
+    <item name="materialDialogButtonPositive">@style/Button.Positive</item>
+  </style>
+
+  <style name="MaterialDialog.Light" parent="android:Theme.Material.Light.Dialog">
+    <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.Dialog.Title</item>
+    <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.Dialog.Message</item>
+    <item name="materialDialogButton">@style/Button</item>
+    <item name="materialDialogButtonPositive">@style/Button.Positive</item>
+  </style>
+
+</resources>

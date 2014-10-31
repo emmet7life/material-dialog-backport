@@ -1,9 +1,12 @@
 package com.prolificinteractive.materialdialog.sample;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import com.prolificinteractive.materialdialog.MaterialDialog;
 
 public class MainActivity extends Activity {
 
@@ -11,6 +14,17 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+
+    findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        MaterialDialog dialog = new MaterialDialog(MainActivity.this);
+        dialog.setTitle("Test Title");
+        dialog.setMessage("This is a test message");
+        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", null);
+        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", null);
+        dialog.show();
+      }
+    });
   }
 
   @Override
