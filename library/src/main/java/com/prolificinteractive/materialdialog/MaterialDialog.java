@@ -26,13 +26,21 @@ public class MaterialDialog extends Dialog {
   private final FrameLayout customContainer;
 
   public MaterialDialog(Context context) {
-    this(context, 0);
+    this(context, 0, false);
   }
 
   public MaterialDialog(Context context, int theme) {
+    this(context, theme, false);
+  }
+
+  public MaterialDialog(Context context, boolean scrollable) {
+    this(context, 0, scrollable);
+  }
+
+  public MaterialDialog(Context context, int theme, boolean scrollable) {
     super(context, getDialogTheme(context, theme));
     getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-    setContentView(R.layout.dialog);
+    setContentView(scrollable ? R.layout.mdb__dialog_scrollabe : R.layout.mdb__dialog);
 
     title = (TextView) findViewById(R.id.mdb__title);
     message = (TextView) findViewById(R.id.mdb__message);
@@ -64,7 +72,10 @@ public class MaterialDialog extends Dialog {
 
   public void setView(View view) {
     customContainer.removeAllViews();
-    customContainer.addView(view);
+    if (view != null) {
+      customContainer.addView(view);
+    }
+    customContainer.setVisibility(view == null ? View.GONE : View.VISIBLE);
   }
 
   public void setButton(final int id, CharSequence buttonText) {

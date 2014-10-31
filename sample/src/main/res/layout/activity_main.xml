@@ -24,4 +24,18 @@
       android:layout_height="wrap_content"
       />
 
+  <Button
+      android:id="@+id/button_material_custom_content"
+      android:text="Dialog with Custom Content"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+
+  <Button
+      android:id="@+id/button_material_custom_theme"
+      android:text="Dialog with Dark Theme"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+
 </LinearLayout>

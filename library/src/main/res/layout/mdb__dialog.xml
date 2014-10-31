@@ -9,7 +9,9 @@
 
   <LinearLayout
       android:orientation="vertical"
-      android:layout_margin="@dimen/mdb__dialog_margin"
+      android:layout_marginTop="@dimen/mdb__dialog_margin"
+      android:layout_marginLeft="@dimen/mdb__dialog_margin"
+      android:layout_marginRight="@dimen/mdb__dialog_margin"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
@@ -31,12 +33,15 @@
         tools:text="Small Text"
         android:id="@+id/mdb__message"
         android:visibility="gone"
+        android:layout_marginBottom="@dimen/mdb__dialog_margin"
         />
 
     <FrameLayout
         android:id="@+id/mdb__custom_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/mdb__dialog_margin"
+        android:visibility="gone"
         />
 
   </LinearLayout>
@@ -60,19 +65,13 @@
         android:visibility="gone"
         />
 
-    <View
-        android:background="@android:color/transparent"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_weight="1"
-        android:visibility="gone"
-        />
-
     <Button
         style="?attr/materialDialogButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="No"
+        android:layout_marginLeft="@dimen/mdb__dialog_margin"
+        android:layout_marginStart="@dimen/mdb__dialog_margin"
         android:id="@+id/mdb__negative"
         android:visibility="gone"
         />

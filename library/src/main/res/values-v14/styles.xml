@@ -17,6 +17,7 @@
     <item name="android:minWidth">88dp</item>
     <item name="android:minHeight">36dp</item>
     <item name="android:gravity">center</item>
+    <item name="android:layout_gravity">center</item>
     <item name="android:background">@drawable/mdb__dialog_button</item>
     <item name="android:textAppearance">@style/TextAppearance.Dialog.Button</item>
     <item name="android:textColor">?android:attr/textColorPrimary</item>
