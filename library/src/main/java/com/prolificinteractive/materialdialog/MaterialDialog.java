@@ -122,18 +122,26 @@ public class MaterialDialog extends Dialog {
     button.setOnClickListener(listener);
   }
 
+  /**
+   * Get a useable theme reference
+   *
+   * @param context Context that has the theme
+   * @param theme Theme user specifies
+   * @return A (hopefully) usable theme for our dialog
+   */
   private static int getDialogTheme(Context context, int theme) {
-    if (theme == R.style.MaterialDialog_Light || theme == R.style.MaterialDialog_Dark) {
-      return theme;
+    if (theme == 0) {
+
+      TypedValue out = new TypedValue();
+      context.getTheme().resolveAttribute(R.attr.MaterialDialogTheme, out, false);
+      if (out.type == TypedValue.TYPE_REFERENCE && out.data > 0) {
+        return out.data;
+      }
+
+      return R.style.MaterialDialog;
     }
 
-    TypedValue out = new TypedValue();
-    context.getTheme().resolveAttribute(R.attr.MaterialDialogTheme, out, false);
-    if (out.type == TypedValue.TYPE_REFERENCE && out.data > 0) {
-      return out.data;
-    }
-
-    return R.style.MaterialDialog_Light;
+    return theme;
   }
 
   /**

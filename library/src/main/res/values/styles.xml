@@ -1,5 +1,7 @@
 <resources>
 
+  <style name="MaterialDialog" parent="MaterialDialog.Light" />
+
   <style name="MaterialDialog.Dark" parent="android:Theme.Dialog">
     <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.Dialog.Title</item>
     <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.Dialog.Message</item>
@@ -7,6 +9,8 @@
     <item name="materialDialogButtonPositive">@style/Widget.MaterialDialog.Button.Positive</item>
   </style>
 
+  <!-- This theme is a lie to make life easier -->
+  <style name="MaterialDialog.Light" parent="MaterialDialog.Dark" />
 
   <style name="TextAppearance.Dialog.Title" parent="android:TextAppearance.Medium">
     <item name="android:textSize">20sp</item>
