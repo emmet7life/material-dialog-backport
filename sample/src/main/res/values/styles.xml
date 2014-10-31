@@ -3,7 +3,7 @@
   <!-- Base application theme. -->
   <style name="AppTheme"
       parent="android:Theme.Holo.Light.DarkActionBar">
-    <item name="MaterialDialogTheme">@style/MaterialDialog.Dark</item>
+    <item name="MaterialDialogTheme">@style/MaterialDialog</item>
     <!-- Customize your theme here. -->
   </style>
 
