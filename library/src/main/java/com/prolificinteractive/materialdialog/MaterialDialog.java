@@ -7,8 +7,8 @@ import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 /**
@@ -19,37 +19,33 @@ public class MaterialDialog extends Dialog {
   private final TextView title;
   private final TextView message;
 
+  private final ViewGroup buttonBar;
   private final TextView buttonPositive;
   private final TextView buttonNegative;
   private final TextView buttonNeutral;
+  private final View neutralSpacer;
 
-  private final FrameLayout customContainer;
+  private final ViewGroup customContainer;
 
   public MaterialDialog(Context context) {
-    this(context, 0, false);
+    this(context, 0);
   }
 
   public MaterialDialog(Context context, int theme) {
-    this(context, theme, false);
-  }
-
-  public MaterialDialog(Context context, boolean scrollable) {
-    this(context, 0, scrollable);
-  }
-
-  public MaterialDialog(Context context, int theme, boolean scrollable) {
     super(context, getDialogTheme(context, theme));
     getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-    setContentView(scrollable ? R.layout.mdb__dialog_scrollabe : R.layout.mdb__dialog);
+    setContentView(R.layout.mdb__dialog);
 
     title = (TextView) findViewById(R.id.mdb__title);
     message = (TextView) findViewById(R.id.mdb__message);
 
-    customContainer = (FrameLayout) findViewById(R.id.mdb__custom_content);
+    customContainer = (ViewGroup) findViewById(R.id.mdb__custom_content);
 
+    buttonBar = (ViewGroup) findViewById(R.id.mdb__button_bar);
     buttonPositive = (TextView) findViewById(R.id.mdb__positive);
     buttonNegative = (TextView) findViewById(R.id.mdb__negative);
     buttonNeutral = (TextView) findViewById(R.id.mdb__neutral);
+    neutralSpacer = findViewById(R.id.mdb__neutral_spacer);
   }
 
   @Override public void setTitle(int titleId) {
@@ -128,7 +124,11 @@ public class MaterialDialog extends Dialog {
         throw new IllegalArgumentException("ID needs to be DialogInterface.BUTTON_*");
     }
 
+    buttonBar.setVisibility(View.VISIBLE);
     button.setVisibility(View.VISIBLE);
+    if (button == buttonNeutral) {
+      neutralSpacer.setVisibility(View.VISIBLE);
+    }
     button.setText(buttonText);
     button.setOnClickListener(listener);
   }
@@ -171,7 +171,6 @@ public class MaterialDialog extends Dialog {
 
     private final Context mContext;
     private int mTheme = 0;
-    private boolean mScrollable = false;
     private boolean cancelable = true;
     private CharSequence title;
     private CharSequence message;
@@ -213,18 +212,8 @@ public class MaterialDialog extends Dialog {
       return new ContextThemeWrapper(mContext, mTheme);
     }
 
-    /**
-     * Set the dialog to use scrollable variant
-     *
-     * @param scrollable use scrollable layout variant
-     */
-    public Builder setScrollable(boolean scrollable) {
-      this.mScrollable = scrollable;
-      return this;
-    }
-
     public MaterialDialog create() {
-      MaterialDialog dialog = new MaterialDialog(mContext, mTheme, mScrollable);
+      MaterialDialog dialog = new MaterialDialog(mContext, mTheme);
       if (title != null) {
         dialog.setTitle(title);
       }
@@ -290,11 +279,15 @@ public class MaterialDialog extends Dialog {
     }
 
     public Builder setMessage(CharSequence message) {
+      //Message and custom view cannot co-exist
+      this.view = null;
       this.message = message;
       return this;
     }
 
     public Builder setView(View view) {
+      //Message and custom view cannot co-exist
+      this.message = null;
       this.view = view;
       return this;
     }

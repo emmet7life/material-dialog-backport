@@ -55,7 +55,6 @@ public class MainActivity extends Activity {
 
   @OnClick(R.id.button_material_content) void backportContent() {
     new MaterialDialog.Builder(MainActivity.this)
-        .setScrollable(true)
         .setTitle("Send Mailer")
         .setMessage("Please enter your email address")
         .setView(getLayoutInflater().inflate(R.layout.dialog_contents, null))
