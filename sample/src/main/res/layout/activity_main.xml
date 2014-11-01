@@ -10,32 +10,154 @@
     tools:context=".MainActivity"
     >
 
-  <Button
-      android:id="@+id/button_system"
-      android:text="System Alert Dialog"
+  <TextView
+      android:text="Basic Dialog"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       />
 
-  <Button
-      android:id="@+id/button_material_basic"
-      android:text="Basic Material Dialog"
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <Button
+        android:id="@+id/button_system_basic"
+        android:text="System"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/button_material_basic"
+        android:text="Backport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
+
+  <TextView
+      android:text="Dialog with Message and Custom View"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       />
 
-  <Button
-      android:id="@+id/button_material_custom_content"
-      android:text="Dialog with Custom Content"
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <Button
+        android:id="@+id/button_system_content"
+        android:text="System"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/button_material_content"
+        android:text="Backport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
+
+  <TextView
+      android:text="Basic Dialog with Theme"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       />
 
-  <Button
-      android:id="@+id/button_material_custom_theme"
-      android:text="Dialog with Dark Theme"
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <Button
+        android:id="@+id/button_system_themed"
+        android:text="System"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/button_material_themed"
+        android:text="Backport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
+
+  <TextView
+      android:text="Dialog with Nothing Set"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       />
+
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <Button
+        android:id="@+id/button_system_blank"
+        android:text="System"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/button_material_blank"
+        android:text="Backport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
+
+  <TextView
+      android:text="Dialog with List Items"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <Button
+        android:id="@+id/button_system_list"
+        android:text="System"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/button_material_list"
+        android:text="Backport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
 
 </LinearLayout>

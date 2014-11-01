@@ -6,8 +6,9 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.prolificinteractive.materialdialog.MaterialDialog;
 
 public class MainActivity extends Activity {
@@ -16,73 +17,110 @@ public class MainActivity extends Activity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    ButterKnife.inject(this);
+  }
 
-    findViewById(R.id.button_system).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        new AlertDialog.Builder(MainActivity.this)
-            .setTitle("Test Title")
-            .setMessage("This is a test message")
-            .setPositiveButton("OK", null)
-            .setNegativeButton("Cancel", null)
-            .show();
-      }
-    });
+  @OnClick(R.id.button_system_basic) void systemBasic() {
+    new AlertDialog.Builder(this)
+        .setTitle("Test Title")
+        .setMessage("This is a test message")
+        .setPositiveButton(android.R.string.ok, null)
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
 
-    findViewById(R.id.button_material_basic).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        MaterialDialog dialog = new MaterialDialog(MainActivity.this);
-        dialog.setTitle("Test Title");
-        dialog.setMessage("This is a test message");
-        dialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK");
-        dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel");
-        dialog.show();
-      }
-    });
+  @OnClick(R.id.button_material_basic) void backportBasic() {
+    new MaterialDialog.Builder(MainActivity.this)
+        .setTitle("Test Title")
+        .setMessage("Test Message")
+        .setPositiveButton(android.R.string.ok)
+        .setNegativeButton(android.R.string.cancel)
+        .show();
+  }
 
-    findViewById(R.id.button_material_custom_content).setOnClickListener(
-        new View.OnClickListener() {
-          @Override public void onClick(View v) {
-            new MaterialDialog.Builder(MainActivity.this)
-                .setScrollable(true)
-                .setTitle("Send Mailer")
-                .setMessage("Please enter your email address")
-                .setView(getLayoutInflater().inflate(R.layout.dialog_contents, null))
-                .setPositiveButton("Save")
-                .setNegativeButton("Cancel")
-                .setNeutralButton("Save Draft", new MaterialDialog.OnClickDelegate() {
-                  @Override public boolean onClick(MaterialDialog dialog, int which) {
-                    Toast.makeText(dialog.getContext(), "Draft Saved", Toast.LENGTH_SHORT).show();
-                    return true;
-                  }
-                })
-                .show();
+  @OnClick(R.id.button_system_content) void systemContent() {
+    new AlertDialog.Builder(MainActivity.this)
+        .setTitle("Send Mailer")
+        .setMessage("Please enter your email address")
+        .setView(getLayoutInflater().inflate(R.layout.dialog_contents, null))
+        .setPositiveButton("Save", null)
+        .setNegativeButton("Cancel", null)
+        .setNeutralButton("Save Draft", new DialogInterface.OnClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which) {
+            Toast.makeText(MainActivity.this, "Draft Saved", Toast.LENGTH_SHORT).show();
           }
-        });
+        })
+        .show();
+  }
 
-    findViewById(R.id.button_material_custom_theme).setOnClickListener(new View.OnClickListener() {
-      @Override public void onClick(View v) {
-        new MaterialDialog.Builder(MainActivity.this, R.style.MaterialDialog_Dark)
-            .setTitle("Test Title")
-            .setMessage("Test Message")
-            .setPositiveButton(android.R.string.ok)
-            .setNegativeButton(android.R.string.cancel)
-            .show();
-      }
-    });
+  @OnClick(R.id.button_material_content) void backportContent() {
+    new MaterialDialog.Builder(MainActivity.this)
+        .setScrollable(true)
+        .setTitle("Send Mailer")
+        .setMessage("Please enter your email address")
+        .setView(getLayoutInflater().inflate(R.layout.dialog_contents, null))
+        .setPositiveButton("Save")
+        .setNegativeButton("Cancel")
+        .setNeutralButton("Save Draft", new MaterialDialog.OnClickDelegate() {
+          @Override public boolean onClick(MaterialDialog dialog, int which) {
+            Toast.makeText(dialog.getContext(), "Draft Saved", Toast.LENGTH_SHORT).show();
+            return true;
+          }
+        })
+        .show();
+  }
+
+  @OnClick(R.id.button_system_themed) void systemThemed() {
+    new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+        .setTitle("Test Title")
+        .setMessage("Test Message")
+        .setPositiveButton(android.R.string.ok, null)
+        .setNegativeButton(android.R.string.cancel, null)
+        .show();
+  }
+
+  @OnClick(R.id.button_material_themed) void backportThemed() {
+    new MaterialDialog.Builder(MainActivity.this, R.style.MaterialDialog_Dark)
+        .setTitle("Test Title")
+        .setMessage("Test Message")
+        .setPositiveButton(android.R.string.ok)
+        .setNegativeButton(android.R.string.cancel)
+        .show();
+  }
+
+  @OnClick(R.id.button_system_blank) void systemBlank() {
+    new AlertDialog.Builder(MainActivity.this).show();
+  }
+
+  @OnClick(R.id.button_material_blank) void backportBlank() {
+    new MaterialDialog.Builder(MainActivity.this).show();
+  }
+
+  @OnClick(R.id.button_system_list) void systemList() {
+    new AlertDialog.Builder(MainActivity.this)
+        .setTitle("List Items")
+        .setItems(R.array.items, new DialogInterface.OnClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which) {
+            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
+          }
+        })
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
+  }
+
+  @OnClick(R.id.button_material_list) void backportList() {
+    //new MaterialDialog.Builder(MainActivity.this).show();
+    Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_SHORT).show();
   }
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
-    // Inflate the menu; this adds items to the action bar if it is present.
     getMenuInflater().inflate(R.menu.menu_main, menu);
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    // Handle action bar item clicks here. The action bar will
-    // automatically handle clicks on the Home/Up button, so long
-    // as you specify a parent activity in AndroidManifest.xml.
     int id = item.getItemId();
 
     //noinspection SimplifiableIfStatement
