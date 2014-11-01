@@ -3,7 +3,6 @@
 
   <style name="TextAppearance.Dialog.Title" parent="android:TextAppearance.Holo.Medium">
     <item name="android:textSize">20sp</item>
-    <item name="android:fontFamily"></item>
   </style>
 
   <style name="TextAppearance.Dialog.Message" parent="android:TextAppearance.Holo.Small">

@@ -10,8 +10,6 @@
   <LinearLayout
       android:orientation="vertical"
       android:layout_marginTop="@dimen/mdb__dialog_margin"
-      android:layout_marginLeft="@dimen/mdb__dialog_margin"
-      android:layout_marginRight="@dimen/mdb__dialog_margin"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       >
@@ -20,6 +18,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/mdb__dialog_margin"
+        android:layout_marginLeft="@dimen/mdb__dialog_margin"
+        android:layout_marginRight="@dimen/mdb__dialog_margin"
         android:textAppearance="?attr/textAppearanceMaterialDialogTitle"
         tools:text="Medium Text"
         android:id="@+id/mdb__title"
@@ -33,6 +33,8 @@
         tools:text="Small Text"
         android:id="@+id/mdb__message"
         android:visibility="gone"
+        android:layout_marginLeft="@dimen/mdb__dialog_margin"
+        android:layout_marginRight="@dimen/mdb__dialog_margin"
         android:layout_marginBottom="@dimen/mdb__dialog_margin"
         />
 
@@ -63,6 +65,13 @@
         tools:text="Cancel"
         android:id="@+id/mdb__neutral"
         android:visibility="gone"
+        />
+
+    <View
+        android:background="@android:color/transparent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         />
 
     <TextView

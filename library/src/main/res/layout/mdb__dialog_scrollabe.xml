@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:minWidth="280dp"
     android:divider="?android:attr/dividerHorizontal"
     android:showDividers="middle"
     android:layout_width="wrap_content"
@@ -17,8 +16,6 @@
 
     <LinearLayout
         android:paddingTop="@dimen/mdb__dialog_margin"
-        android:paddingLeft="@dimen/mdb__dialog_margin"
-        android:paddingRight="@dimen/mdb__dialog_margin"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,6 +24,8 @@
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_marginLeft="@dimen/mdb__dialog_margin"
+          android:layout_marginRight="@dimen/mdb__dialog_margin"
           android:layout_marginBottom="@dimen/mdb__dialog_margin"
           android:textAppearance="?attr/textAppearanceMaterialDialogTitle"
           tools:text="Medium Text"
@@ -41,6 +40,8 @@
           tools:text="Small Text"
           android:id="@+id/mdb__message"
           android:visibility="gone"
+          android:layout_marginLeft="@dimen/mdb__dialog_margin"
+          android:layout_marginRight="@dimen/mdb__dialog_margin"
           android:layout_marginBottom="@dimen/mdb__dialog_margin"
           />
 
@@ -57,28 +58,33 @@
   </ScrollView>
 
   <LinearLayout
-      android:layout_marginLeft="@dimen/mdb__dialog_button_margin"
-      android:layout_marginRight="@dimen/mdb__dialog_button_margin"
+      android:layout_margin="@dimen/mdb__dialog_button_margin"
       android:orientation="horizontal"
       android:layout_gravity="end"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:minHeight="36dp"
       >
 
     <TextView
         style="?attr/materialDialogButton"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:text="Cancel"
         android:id="@+id/mdb__neutral"
         android:visibility="gone"
         />
 
+    <View
+        android:background="@android:color/transparent"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        />
+
     <TextView
         style="?attr/materialDialogButton"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:text="No"
         android:layout_marginLeft="@dimen/mdb__dialog_margin"
         android:layout_marginStart="@dimen/mdb__dialog_margin"
@@ -89,7 +95,7 @@
     <TextView
         style="?attr/materialDialogButton"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:text="OK"
         android:id="@+id/mdb__positive"
         android:visibility="gone"

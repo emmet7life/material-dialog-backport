@@ -172,6 +172,7 @@ public class MaterialDialog extends Dialog {
     private final Context mContext;
     private int mTheme = 0;
     private boolean mScrollable = false;
+    private boolean cancelable = true;
     private CharSequence title;
     private CharSequence message;
     private View view;
@@ -191,7 +192,6 @@ public class MaterialDialog extends Dialog {
     private OnCancelListener onCancelListener;
     private OnDismissListener onDismissListener;
     private OnKeyListener onKeyListener;
-    private boolean cancelable;
 
     public Builder(Context context) {
       this(context, 0);
