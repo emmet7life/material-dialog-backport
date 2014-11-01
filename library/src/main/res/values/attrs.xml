@@ -7,6 +7,5 @@
   <attr name="textAppearanceMaterialDialogMessage" format="reference" />
 
   <attr name="materialDialogButton" format="reference" />
-  <attr name="materialDialogButtonPositive" format="reference" />
 
 </resources>

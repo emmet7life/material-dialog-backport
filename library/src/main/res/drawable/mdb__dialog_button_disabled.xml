@@ -5,9 +5,11 @@
 
   <padding
       android:bottom="8dp"
-      android:left="8dp"
-      android:right="8dp"
+      android:left="12dp"
+      android:right="12dp"
       android:top="8dp"
       />
+
+  <corners android:radius="2dp" />
 
 </shape>
