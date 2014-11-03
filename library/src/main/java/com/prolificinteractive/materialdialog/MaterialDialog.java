@@ -188,7 +188,7 @@ public class MaterialDialog extends Dialog {
         return out.data;
       }
 
-      return R.style.MaterialDialog;
+      return R.style.Theme_MaterialDialog;
     }
 
     return theme;
@@ -245,8 +245,8 @@ public class MaterialDialog extends Dialog {
      * @param context Context
      * @param theme Style resource to use for the dialog theme
      * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog
-     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Dark
-     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog_Light
+     * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog_Dark
+     * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog_Light
      */
     public Builder(Context context, int theme) {
       this.mTheme = getDialogTheme(context, theme);

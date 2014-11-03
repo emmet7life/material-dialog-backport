@@ -4,7 +4,7 @@
   <!-- Base application theme. -->
   <style name="AppTheme"
       parent="android:Theme.Material.Light.DarkActionBar">
-    <item name="MaterialDialogTheme">@style/MaterialDialog</item>
+    <item name="MaterialDialogTheme">@style/Theme.MaterialDialog</item>
     <!-- Customize your theme here. -->
   </style>
 

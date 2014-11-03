@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
   }
 
   @OnClick(R.id.button_material_themed) void backportThemed() {
-    new MaterialDialog.Builder(MainActivity.this, R.style.MaterialDialog_Dark)
+    new MaterialDialog.Builder(MainActivity.this, R.style.Theme_MaterialDialog_Dark)
         .setTitle("Test Title")
         .setMessage("Test Message")
         .setPositiveButton(android.R.string.ok)

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <style name="TextAppearance.Dialog.Title" parent="android:TextAppearance.Holo.Medium">
+  <style name="TextAppearance.MaterialDialog.Title" parent="android:TextAppearance.Holo.Medium">
     <item name="android:textSize">20sp</item>
   </style>
 
-  <style name="TextAppearance.Dialog.Message" parent="android:TextAppearance.Holo.Small">
+  <style name="TextAppearance.MaterialDialog.Message" parent="android:TextAppearance.Holo.Small">
     <item name="android:textSize">14sp</item>
     <item name="android:textColor">?android:attr/textColorPrimary</item>
   </style>
 
-  <style name="TextAppearance.Dialog.Button" parent="android:TextAppearance.Holo.Small">
+  <style name="TextAppearance.MaterialDialog.Button" parent="android:TextAppearance.Holo.Small">
     <item name="android:textSize">14sp</item>
     <item name="android:textColor">?android:attr/textColorSecondary</item>
   </style>
@@ -21,7 +21,7 @@
     <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
     <item name="android:background">@drawable/mdb__dialog_button</item>
-    <item name="android:textAppearance">@style/TextAppearance.Dialog.Button</item>
+    <item name="android:textAppearance">@style/TextAppearance.MaterialDialog.Button</item>
     <item name="android:textColor">?android:attr/textColorPrimary</item>
     <item name="android:textAllCaps">true</item>
   </style>
