@@ -160,4 +160,34 @@
 
   </LinearLayout>
 
+  <TextView
+      android:text="Dialog with Multi List Items"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
+
+  <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+
+    <Button
+        android:id="@+id/button_system_list_multi"
+        android:text="System"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:id="@+id/button_material_list_multi"
+        android:text="Backport"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        />
+
+  </LinearLayout>
+
 </LinearLayout>

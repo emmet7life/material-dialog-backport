@@ -9,9 +9,15 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 /**
@@ -34,6 +40,8 @@ public class MaterialDialog extends Dialog {
   private final TextView buttonNeutral;
 
   private final ViewGroup customContainer;
+  private final ListView listView;
+  private final ScrollView scrollView;
 
   public MaterialDialog(Context context) {
     this(context, 0);
@@ -55,10 +63,16 @@ public class MaterialDialog extends Dialog {
     noButtonSpacer = findViewById(R.id.mdb__textSpacerNoButtons);
 
     customContainer = (ViewGroup) findViewById(R.id.mdb__custom);
+    listView = (ListView) findViewById(R.id.mdb__list);
+    scrollView = (ScrollView) findViewById(R.id.mdb__scroll);
 
     buttonPositive = (TextView) findViewById(android.R.id.button1);
     buttonNegative = (TextView) findViewById(android.R.id.button2);
     buttonNeutral = (TextView) findViewById(android.R.id.button3);
+  }
+
+  public ListView getListView() {
+    return listView;
   }
 
   @Override public void setTitle(int titleId) {
@@ -95,6 +109,10 @@ public class MaterialDialog extends Dialog {
     boolean hasCustomView = customContainer.getChildCount() > 0;
     customPanel.setVisibility(hasCustomView ? View.VISIBLE : View.GONE);
     contentPanel.setVisibility(hasCustomView ? View.GONE : View.VISIBLE);
+    if (!hasCustomView) {
+      this.message.setVisibility(TextUtils.isEmpty(message.getText()) ? View.GONE : View.VISIBLE);
+      listView.setVisibility(listView.getAdapter() != null ? View.VISIBLE : View.GONE);
+    }
   }
 
   public void setButton(final int id, CharSequence buttonText) {
@@ -213,6 +231,12 @@ public class MaterialDialog extends Dialog {
     private OnDismissListener onDismissListener;
     private OnKeyListener onKeyListener;
 
+    private ListType listType = ListType.NONE;
+    private OnClickListener listListener;
+    private OnClickDelegate listDelegate;
+    private ListAdapter listAdapter;
+    private OnMultiChoiceClickListener listMultListener;
+
     public Builder(Context context) {
       this(context, 0);
     }
@@ -234,7 +258,7 @@ public class MaterialDialog extends Dialog {
     }
 
     public MaterialDialog create() {
-      MaterialDialog dialog = new MaterialDialog(mContext, mTheme);
+      final MaterialDialog dialog = new MaterialDialog(mContext, mTheme);
       if (title != null) {
         dialog.setTitle(title);
       }
@@ -244,6 +268,46 @@ public class MaterialDialog extends Dialog {
       if (view != null) {
         dialog.setView(view);
       }
+
+      if (listAdapter != null) {
+        final ListView listView = dialog.getListView();
+        listView.setAdapter(listAdapter);
+        if (listType == ListType.SINGLE) {
+          listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        } else if (listType == ListType.MULTI) {
+          listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+        } else {
+          listView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+        }
+        if (listType == ListType.MULTI) {
+          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> parent, View view, int position,
+                long id) {
+              if (listMultListener != null) {
+                listMultListener.onClick(dialog, position, listView.isItemChecked(position));
+              }
+            }
+          });
+        } else {
+          listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override public void onItemClick(AdapterView<?> parent, View view, int position,
+                long id) {
+              boolean handled = listType == ListType.ITEMS;
+              if (listListener != null) {
+                listListener.onClick(dialog, position);
+                dialog.dismiss();
+              } else if (listDelegate != null) {
+                handled = listDelegate.onClick(dialog, position);
+              }
+              if (!handled) {
+                dialog.dismiss();
+              }
+            }
+          });
+        }
+      }
+      dialog.setContentPanelsVisibility();
+
       if (positiveText != null) {
         if (positiveDelegate != null) {
           dialog.setButton(DialogInterface.BUTTON_POSITIVE, positiveText, positiveDelegate);
@@ -418,6 +482,108 @@ public class MaterialDialog extends Dialog {
     public Builder setCancelable(boolean cancelable) {
       this.cancelable = cancelable;
       return this;
+    }
+
+    public Builder setItems(CharSequence[] items, OnClickListener listener) {
+      return setAdapter(
+          new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_1, items),
+          listener
+      );
+    }
+
+    public Builder setItems(int itemsId, OnClickListener listener) {
+      return setItems(mContext.getResources().getTextArray(itemsId), listener);
+    }
+
+    public Builder setAdapter(ListAdapter adapter, OnClickListener listener) {
+      this.listType = ListType.ITEMS;
+      this.listAdapter = adapter;
+      this.listListener = listener;
+      return this;
+    }
+
+    public Builder setItems(CharSequence[] items, OnClickDelegate delegate) {
+      return setAdapter(
+          new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_1, items),
+          delegate
+      );
+    }
+
+    public Builder setItems(int itemsId, OnClickDelegate delegate) {
+      return setItems(mContext.getResources().getTextArray(itemsId), delegate);
+    }
+
+    public Builder setAdapter(ListAdapter adapter, OnClickDelegate delegate) {
+      this.listType = ListType.ITEMS;
+      this.listAdapter = adapter;
+      this.listDelegate = delegate;
+      return this;
+    }
+
+    public Builder setSingleChoiceItems(CharSequence[] items, OnClickDelegate delegate) {
+      return setSingleChoiceItems(
+          new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_single_choice,
+              items),
+          delegate
+      );
+    }
+
+    public Builder setSingleChoiceItems(int itemsId, OnClickDelegate delegate) {
+      return setSingleChoiceItems(mContext.getResources().getTextArray(itemsId), delegate);
+    }
+
+    public Builder setSingleChoiceItems(ListAdapter adapter, OnClickDelegate delegate) {
+      this.listType = ListType.SINGLE;
+      this.listAdapter = adapter;
+      this.listDelegate = delegate;
+      return this;
+    }
+
+    public Builder setSingleChoiceItems(CharSequence[] items, OnClickListener delegate) {
+      return setSingleChoiceItems(
+          new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_single_choice,
+              items),
+          delegate
+      );
+    }
+
+    public Builder setSingleChoiceItems(int itemsId, OnClickListener delegate) {
+      return setSingleChoiceItems(mContext.getResources().getTextArray(itemsId), delegate);
+    }
+
+    public Builder setSingleChoiceItems(ListAdapter adapter, OnClickListener delegate) {
+      this.listType = ListType.SINGLE;
+      this.listAdapter = adapter;
+      this.listListener = delegate;
+      return this;
+    }
+
+    public Builder setMultiChoiceItems(CharSequence[] items, boolean[] checkedItems,
+        OnMultiChoiceClickListener listener) {
+      return setMultiChoiceItems(
+          new ArrayAdapter<CharSequence>(mContext,
+              android.R.layout.simple_list_item_multiple_choice, items),
+          checkedItems,
+          listener
+      );
+    }
+
+    public Builder setMultiChoiceItems(int itemsId, boolean[] checkedItems,
+        OnMultiChoiceClickListener listener) {
+      return setMultiChoiceItems(mContext.getResources().getTextArray(itemsId), checkedItems,
+          listener);
+    }
+
+    public Builder setMultiChoiceItems(ListAdapter adapter, boolean[] checkedItems,
+        OnMultiChoiceClickListener listener) {
+      this.listType = ListType.MULTI;
+      this.listAdapter = adapter;
+      this.listMultListener = listener;
+      return this;
+    }
+
+    private static enum ListType {
+      NONE, ITEMS, SINGLE, MULTI
     }
   }
 }

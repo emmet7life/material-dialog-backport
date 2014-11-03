@@ -108,8 +108,41 @@ public class MainActivity extends Activity {
   }
 
   @OnClick(R.id.button_material_list) void backportList() {
-    //new MaterialDialog.Builder(MainActivity.this).show();
-    Toast.makeText(MainActivity.this, "Not Implemented Yet", Toast.LENGTH_SHORT).show();
+    new MaterialDialog.Builder(MainActivity.this)
+        .setTitle("List Items")
+        .setItems(R.array.items, new DialogInterface.OnClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which) {
+            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
+          }
+        })
+        .setPositiveButton(android.R.string.ok)
+        .show();
+  }
+
+  @OnClick(R.id.button_system_list_multi) void systemListMulti() {
+    new AlertDialog.Builder(MainActivity.this)
+        .setTitle("List Items")
+        .setMultiChoiceItems(R.array.items, null, new DialogInterface.OnMultiChoiceClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+            Toast.makeText(MainActivity.this, "Item " + which + " " + isChecked, Toast.LENGTH_SHORT)
+                .show();
+          }
+        })
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
+  }
+
+  @OnClick(R.id.button_material_list_multi) void backportListMulti() {
+    new MaterialDialog.Builder(MainActivity.this)
+        .setTitle("List Items")
+        .setMultiChoiceItems(R.array.items, null, new DialogInterface.OnMultiChoiceClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+            Toast.makeText(MainActivity.this, "Item " + which + " " + isChecked, Toast.LENGTH_SHORT)
+                .show();
+          }
+        })
+        .setPositiveButton(android.R.string.ok)
+        .show();
   }
 
   @Override
