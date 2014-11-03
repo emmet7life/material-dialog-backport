@@ -9,6 +9,9 @@ import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -16,14 +19,19 @@ import android.widget.TextView;
  */
 public class MaterialDialog extends Dialog {
 
+  private final LinearLayout topPanel;
+  private final LinearLayout contentPanel;
+  private final FrameLayout customPanel;
+  private final LinearLayout buttonPanel;
+
+  private final ImageView icon;
   private final TextView title;
   private final TextView message;
+  private final View noButtonSpacer;
 
-  private final ViewGroup buttonBar;
   private final TextView buttonPositive;
   private final TextView buttonNegative;
   private final TextView buttonNeutral;
-  private final View neutralSpacer;
 
   private final ViewGroup customContainer;
 
@@ -36,16 +44,21 @@ public class MaterialDialog extends Dialog {
     getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     setContentView(R.layout.mdb__dialog);
 
+    topPanel = (LinearLayout) findViewById(R.id.mdb__topPanel);
+    contentPanel = (LinearLayout) findViewById(R.id.mdb__contentPanel);
+    customPanel = (FrameLayout) findViewById(R.id.mdb__customPanel);
+    buttonPanel = (LinearLayout) findViewById(R.id.mdb__buttonPanel);
+
+    icon = (ImageView) findViewById(android.R.id.icon);
     title = (TextView) findViewById(R.id.mdb__title);
     message = (TextView) findViewById(R.id.mdb__message);
+    noButtonSpacer = findViewById(R.id.mdb__textSpacerNoButtons);
 
-    customContainer = (ViewGroup) findViewById(R.id.mdb__custom_content);
+    customContainer = (ViewGroup) findViewById(R.id.mdb__custom);
 
-    buttonBar = (ViewGroup) findViewById(R.id.mdb__button_bar);
-    buttonPositive = (TextView) findViewById(R.id.mdb__positive);
-    buttonNegative = (TextView) findViewById(R.id.mdb__negative);
-    buttonNeutral = (TextView) findViewById(R.id.mdb__neutral);
-    neutralSpacer = findViewById(R.id.mdb__neutral_spacer);
+    buttonPositive = (TextView) findViewById(android.R.id.button1);
+    buttonNegative = (TextView) findViewById(android.R.id.button2);
+    buttonNeutral = (TextView) findViewById(android.R.id.button3);
   }
 
   @Override public void setTitle(int titleId) {
@@ -54,7 +67,11 @@ public class MaterialDialog extends Dialog {
 
   @Override public void setTitle(CharSequence title) {
     this.title.setText(title);
-    this.title.setVisibility(TextUtils.isEmpty(title) ? View.GONE : View.VISIBLE);
+    setTopPanelVisibility();
+  }
+
+  private void setTopPanelVisibility() {
+    topPanel.setVisibility(TextUtils.isEmpty(title.getText()) ? View.GONE : View.VISIBLE);
   }
 
   public void setMessage(int messageId) {
@@ -63,7 +80,7 @@ public class MaterialDialog extends Dialog {
 
   public void setMessage(CharSequence message) {
     this.message.setText(message);
-    this.message.setVisibility(TextUtils.isEmpty(message) ? View.GONE : View.VISIBLE);
+    setContentPanelsVisibility();
   }
 
   public void setView(View view) {
@@ -71,7 +88,13 @@ public class MaterialDialog extends Dialog {
     if (view != null) {
       customContainer.addView(view);
     }
-    customContainer.setVisibility(view == null ? View.GONE : View.VISIBLE);
+    setContentPanelsVisibility();
+  }
+
+  private void setContentPanelsVisibility() {
+    boolean hasCustomView = customContainer.getChildCount() > 0;
+    customPanel.setVisibility(hasCustomView ? View.VISIBLE : View.GONE);
+    contentPanel.setVisibility(hasCustomView ? View.GONE : View.VISIBLE);
   }
 
   public void setButton(final int id, CharSequence buttonText) {
@@ -124,11 +147,9 @@ public class MaterialDialog extends Dialog {
         throw new IllegalArgumentException("ID needs to be DialogInterface.BUTTON_*");
     }
 
-    buttonBar.setVisibility(View.VISIBLE);
+    buttonPanel.setVisibility(View.VISIBLE);
+    noButtonSpacer.setVisibility(View.GONE);
     button.setVisibility(View.VISIBLE);
-    if (button == buttonNeutral) {
-      neutralSpacer.setVisibility(View.VISIBLE);
-    }
     button.setText(buttonText);
     button.setOnClickListener(listener);
   }

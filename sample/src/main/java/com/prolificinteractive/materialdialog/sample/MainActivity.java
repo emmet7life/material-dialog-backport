@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
   @OnClick(R.id.button_material_basic) void backportBasic() {
     new MaterialDialog.Builder(MainActivity.this)
         .setTitle("Test Title")
-        .setMessage("Test Message")
+        .setMessage("This is a test message")
         .setPositiveButton(android.R.string.ok)
         .setNegativeButton(android.R.string.cancel)
         .show();
