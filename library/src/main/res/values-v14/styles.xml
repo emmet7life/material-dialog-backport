@@ -3,6 +3,7 @@
 
   <style name="TextAppearance.MaterialDialog.Title" parent="android:TextAppearance.Holo.Medium">
     <item name="android:textSize">20sp</item>
+    <item name="android:singleLine">true</item>
   </style>
 
   <style name="TextAppearance.MaterialDialog.Message" parent="android:TextAppearance.Holo.Small">
