@@ -21,6 +21,6 @@ android {
 
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
-  compile project(':library')
+  compile 'com.prolificinteractive:materialdialog:+@aar'
   compile 'com.jakewharton:butterknife:6.0.0'
 }
