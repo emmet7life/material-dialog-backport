@@ -44,10 +44,22 @@ public class MaterialDialog extends Dialog {
   private final ListView listView;
   private final ScrollView scrollView;
 
+  /**
+   * Construct an MaterialDialog that uses the theme defined using
+   * {@link com.prolificinteractive.materialdialog.R.attr#MaterialDialogTheme}
+   * or defaulting to a light theme
+   */
   public MaterialDialog(Context context) {
     this(context, 0);
   }
 
+  /**
+   * Construct an MaterialDialog that uses an explicit theme.
+   * The Backport library defines both a light and dark themes.
+   *
+   * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog_Light
+   * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog_Dark
+   */
   public MaterialDialog(Context context, int theme) {
     super(context, getDialogTheme(context, theme));
     getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -72,14 +84,27 @@ public class MaterialDialog extends Dialog {
     buttonNeutral = (TextView) findViewById(android.R.id.button3);
   }
 
+  /**
+   * Get the list view used in the dialog
+   *
+   * @return the ListView
+   */
   public ListView getListView() {
     return listView;
   }
 
+  /**
+   * Set the title text for this dialog
+   * @param titleId The resource id for the title
+   */
   @Override public void setTitle(int titleId) {
     this.setTitle(getContext().getResources().getText(titleId));
   }
 
+  /**
+   * Set the title text for this dialog
+   * @param title The new text for the title
+   */
   @Override public void setTitle(CharSequence title) {
     this.title.setText(title);
     setTopPanelVisibility();
@@ -94,24 +119,47 @@ public class MaterialDialog extends Dialog {
     );
   }
 
+  /**
+   * Display a message as the dialog contents
+   * @param messageId the resource id for the message
+   */
   public void setMessage(int messageId) {
     setMessage(getContext().getText(messageId));
   }
 
+  /**
+   * Display a message as the dialog contents
+   * @param message the new text for the message
+   */
   public void setMessage(CharSequence message) {
     this.message.setText(message);
     setContentPanelsVisibility();
   }
 
+  /**
+   * Set resId to 0 if you don't want an icon
+   * @param iconId the resourceId of the drawable to use as the icon or 0 if you don't want an icon
+   */
   public void setIcon(int iconId) {
-    setIcon(getContext().getResources().getDrawable(iconId));
+    if (iconId == 0) {
+      setIcon(null);
+    } else {
+      setIcon(getContext().getResources().getDrawable(iconId));
+    }
   }
 
+  /**
+   * @param icon the icon to display, null if none
+   */
   public void setIcon(Drawable icon) {
     this.icon.setImageDrawable(icon);
     setTopPanelVisibility();
   }
 
+  /**
+   * Set the view to display in that dialog
+   * @param view the View
+   */
   public void setView(View view) {
     customContainer.removeAllViews();
     if (view != null) {
@@ -188,7 +236,7 @@ public class MaterialDialog extends Dialog {
   }
 
   /**
-   * Get a useable theme reference
+   * Get a usable theme reference
    *
    * @param context Context that has the theme
    * @param theme Theme user specifies
@@ -210,7 +258,8 @@ public class MaterialDialog extends Dialog {
   }
 
   /**
-   * FIXME high level documentation needed
+   * Interface used to allow the creator of a dialog to run some code when an item on
+   * the dialog is clicked, and determine if the dialog is to be dismissed
    */
   public static interface OnClickDelegate {
     /**
@@ -221,6 +270,9 @@ public class MaterialDialog extends Dialog {
     public boolean onClick(MaterialDialog dialog, int which);
   }
 
+  /**
+   * Builder for {@link com.prolificinteractive.materialdialog.MaterialDialog}
+   */
   public static final class Builder {
 
     private final Context mContext;
@@ -253,11 +305,18 @@ public class MaterialDialog extends Dialog {
     private ListAdapter listAdapter;
     private OnMultiChoiceClickListener listMultListener;
 
+    /**
+     * Constructor using a context for this builder and the
+     * {@link com.prolificinteractive.materialdialog.MaterialDialog} it creates
+     */
     public Builder(Context context) {
       this(context, 0);
     }
 
     /**
+     * Constructor using a context and theme for this builder and the
+     * {@link com.prolificinteractive.materialdialog.MaterialDialog} it creates
+     *
      * @param context Context
      * @param theme Style resource to use for the dialog theme
      * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog
@@ -269,10 +328,24 @@ public class MaterialDialog extends Dialog {
       this.mContext = context;
     }
 
+    /**
+     * Returns a Context with the appropriate theme for dialogs created by this Builder.
+     * Applications should use this Context for obtaining LayoutInflaters for inflating views
+     * that will be used in the resulting dialogs, as it will cause views to be inflated with the correct theme
+     * @return A Context for built Dialogs
+     */
     public Context getContext() {
       return new ContextThemeWrapper(mContext, mTheme);
     }
 
+    /**
+     * Creates a {@link com.prolificinteractive.materialdialog.MaterialDialog}
+     * with the arguments supplied to this builder.
+     * It does not {@linkplain #show()} the dialog.
+     * This allows the user to do any extra processing before displaying the dialog.
+     * Use {@linkplain #show()} if you don't have any other processing
+     * to do and want this to be created and displayed.
+     */
     public MaterialDialog create() {
       final MaterialDialog dialog = new MaterialDialog(mContext, mTheme);
       if (icon != null) {
@@ -363,6 +436,10 @@ public class MaterialDialog extends Dialog {
       return dialog;
     }
 
+    /**
+     * Creates a {@link com.prolificinteractive.materialdialog.MaterialDialog} with the
+     * arguments supplied to this builder and {@linkplain #show()}'s the dialog
+     */
     public MaterialDialog show() {
       MaterialDialog dialog = create();
       dialog.show();
