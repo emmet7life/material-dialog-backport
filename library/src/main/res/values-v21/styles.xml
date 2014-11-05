@@ -2,32 +2,32 @@
 <resources>
 
   <style name="Theme.MaterialDialog.Dark" parent="android:Theme.Material.Dialog.MinWidth">
-  <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.MaterialDialog.Title</item>
+    <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.MaterialDialog.Title</item>
     <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.MaterialDialog.Message
     </item>
     <item name="materialDialogButton">@style/Widget.MaterialDialog.Button</item>
   </style>
 
   <style name="Theme.MaterialDialog.Light" parent="android:Theme.Material.Light.Dialog.MinWidth">
-  <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.MaterialDialog.Title</item>
+    <item name="textAppearanceMaterialDialogTitle">@style/TextAppearance.MaterialDialog.Title</item>
     <item name="textAppearanceMaterialDialogMessage">@style/TextAppearance.MaterialDialog.Message
     </item>
     <item name="materialDialogButton">@style/Widget.MaterialDialog.Button</item>
   </style>
 
   <style name="TextAppearance.MaterialDialog.Title" parent="android:TextAppearance.Material.Medium">
-    <item name="android:textSize">20sp</item>
+    <item name="android:textSize">@dimen/mdb__text_title</item>
     <item name="android:singleLine">true</item>
   </style>
 
   <style name="TextAppearance.MaterialDialog.Message"
       parent="android:TextAppearance.Material.Small">
-    <item name="android:textSize">14sp</item>
+    <item name="android:textSize">@dimen/mdb__text_message</item>
     <item name="android:textColor">?android:attr/textColorPrimary</item>
   </style>
 
   <style name="TextAppearance.MaterialDialog.Button" parent="android:TextAppearance.Material.Small">
-    <item name="android:textSize">14sp</item>
+    <item name="android:textSize">@dimen/mdb__text_button</item>
     <item name="android:textColor">?android:attr/textColorSecondary</item>
   </style>
 

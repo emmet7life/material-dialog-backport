@@ -2,23 +2,23 @@
 <resources>
 
   <style name="TextAppearance.MaterialDialog.Title" parent="android:TextAppearance.Holo.Medium">
-    <item name="android:textSize">20sp</item>
+    <item name="android:textSize">@dimen/mdb__text_title</item>
     <item name="android:singleLine">true</item>
   </style>
 
   <style name="TextAppearance.MaterialDialog.Message" parent="android:TextAppearance.Holo.Small">
-    <item name="android:textSize">14sp</item>
+    <item name="android:textSize">@dimen/mdb__text_message</item>
     <item name="android:textColor">?android:attr/textColorPrimary</item>
   </style>
 
   <style name="TextAppearance.MaterialDialog.Button" parent="android:TextAppearance.Holo.Small">
-    <item name="android:textSize">14sp</item>
+    <item name="android:textSize">@dimen/mdb__text_button</item>
     <item name="android:textColor">?android:attr/textColorSecondary</item>
   </style>
 
   <style name="Widget.MaterialDialog.Button" parent="Widget.MaterialDialog">
-    <item name="android:minWidth">48dp</item>
-    <item name="android:minHeight">36dp</item>
+    <item name="android:minWidth">@dimen/mdb__button_min_width</item>
+    <item name="android:minHeight">@dimen/mdb__button_min_height</item>
     <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
     <item name="android:background">@drawable/mdb__dialog_button</item>
