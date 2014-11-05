@@ -71,6 +71,7 @@ public class MainActivity extends Activity {
 
   @OnClick(R.id.button_system_themed) void systemThemed() {
     new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
+        .setIcon(android.R.drawable.ic_dialog_info)
         .setTitle("Test Title")
         .setMessage("Test Message")
         .setPositiveButton(android.R.string.ok, null)
@@ -80,6 +81,7 @@ public class MainActivity extends Activity {
 
   @OnClick(R.id.button_material_themed) void backportThemed() {
     new MaterialDialog.Builder(MainActivity.this, R.style.Theme_MaterialDialog_Dark)
+        .setIcon(android.R.drawable.ic_dialog_info)
         .setTitle("Test Title")
         .setMessage("Test Message")
         .setPositiveButton(android.R.string.ok)

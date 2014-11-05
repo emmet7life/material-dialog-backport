@@ -3,6 +3,7 @@ package com.prolificinteractive.materialdialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
@@ -85,7 +86,12 @@ public class MaterialDialog extends Dialog {
   }
 
   private void setTopPanelVisibility() {
-    topPanel.setVisibility(TextUtils.isEmpty(title.getText()) ? View.GONE : View.VISIBLE);
+    icon.setVisibility(icon.getDrawable() != null ? View.VISIBLE : View.GONE);
+    title.setVisibility(TextUtils.isEmpty(title.getText()) ? View.GONE : View.VISIBLE);
+    topPanel.setVisibility(
+        icon.getVisibility() == View.VISIBLE || title.getVisibility() == View.VISIBLE ?
+            View.VISIBLE : View.GONE
+    );
   }
 
   public void setMessage(int messageId) {
@@ -95,6 +101,15 @@ public class MaterialDialog extends Dialog {
   public void setMessage(CharSequence message) {
     this.message.setText(message);
     setContentPanelsVisibility();
+  }
+
+  public void setIcon(int iconId) {
+    setIcon(getContext().getResources().getDrawable(iconId));
+  }
+
+  public void setIcon(Drawable icon) {
+    this.icon.setImageDrawable(icon);
+    setTopPanelVisibility();
   }
 
   public void setView(View view) {
@@ -211,6 +226,7 @@ public class MaterialDialog extends Dialog {
     private final Context mContext;
     private int mTheme = 0;
     private boolean cancelable = true;
+    private Drawable icon;
     private CharSequence title;
     private CharSequence message;
     private View view;
@@ -244,7 +260,7 @@ public class MaterialDialog extends Dialog {
     /**
      * @param context Context
      * @param theme Style resource to use for the dialog theme
-     * @see com.prolificinteractive.materialdialog.R.style#MaterialDialog
+     * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog
      * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog_Dark
      * @see com.prolificinteractive.materialdialog.R.style#Theme_MaterialDialog_Light
      */
@@ -259,6 +275,9 @@ public class MaterialDialog extends Dialog {
 
     public MaterialDialog create() {
       final MaterialDialog dialog = new MaterialDialog(mContext, mTheme);
+      if (icon != null) {
+        dialog.setIcon(icon);
+      }
       if (title != null) {
         dialog.setTitle(title);
       }
@@ -367,6 +386,15 @@ public class MaterialDialog extends Dialog {
       //Message and custom view cannot co-exist
       this.view = null;
       this.message = message;
+      return this;
+    }
+
+    public Builder setIcon(int iconId) {
+      return setIcon(mContext.getResources().getDrawable(iconId));
+    }
+
+    public Builder setIcon(Drawable icon) {
+      this.icon = icon;
       return this;
     }
 

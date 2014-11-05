@@ -33,7 +33,6 @@ There are some additions and omissions that may change your code:
 2. Since `Builder.setPositiveButton("OK", null)` is now ambiguous, there is a 3rd option: `Builder.setPositiveButton("OK")`
 3. Builder methods for lists that use a `Cursor` are not implemented
 4. Deprecated methods are not implemented, such as `AlertDialog.setButton(CharSequence, OnClickListener)`
-5. Title icons are not implemented, such as `AlertDialog.setIcon(Drawable)`
 
 Contributors
 ------------
