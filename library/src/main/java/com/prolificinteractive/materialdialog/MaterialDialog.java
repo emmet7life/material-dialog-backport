@@ -22,7 +22,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 /**
- * FIXME add some comments for people browsing
+ * A subclass of Dialog that can display one, two or three buttons,
+ * a title and content with a Material theme
  */
 public class MaterialDialog extends Dialog {
 
@@ -110,6 +111,9 @@ public class MaterialDialog extends Dialog {
     setTopPanelVisibility();
   }
 
+  /**
+   * Correctly set top panel visibilities
+   */
   private void setTopPanelVisibility() {
     icon.setVisibility(icon.getDrawable() != null ? View.VISIBLE : View.GONE);
     title.setVisibility(TextUtils.isEmpty(title.getText()) ? View.GONE : View.VISIBLE);
@@ -168,6 +172,9 @@ public class MaterialDialog extends Dialog {
     setContentPanelsVisibility();
   }
 
+  /**
+   * Correctly set visibility of content
+   */
   private void setContentPanelsVisibility() {
     boolean hasCustomView = customContainer.getChildCount() > 0;
     customPanel.setVisibility(hasCustomView ? View.VISIBLE : View.GONE);
@@ -178,6 +185,15 @@ public class MaterialDialog extends Dialog {
     }
   }
 
+  /**
+   * Set the text of a button which will dismiss the dialog when clicked
+   *
+   * @param id Which button to set the text for, can be one of
+   * {@link DialogInterface#BUTTON_POSITIVE},
+   * {@link DialogInterface#BUTTON_NEGATIVE}, or
+   * {@link DialogInterface#BUTTON_NEUTRAL}
+   * @param buttonText The text to display for the button.
+   */
   public void setButton(final int id, CharSequence buttonText) {
     setButton(id, buttonText, new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -186,6 +202,17 @@ public class MaterialDialog extends Dialog {
     });
   }
 
+  /**
+   * Set a listener to be invoked when the indicated button of the dialog is pressed.
+   * Dialog will be dismissed after listener is called
+   *
+   * @param id Which button to set the text for, can be one of
+   *            {@link DialogInterface#BUTTON_POSITIVE},
+   *            {@link DialogInterface#BUTTON_NEGATIVE}, or
+   *            {@link DialogInterface#BUTTON_NEUTRAL}
+   * @param buttonText The text to display for the button.
+   * @param listener Click listener, can be null
+   */
   public void setButton(final int id, CharSequence buttonText, final OnClickListener listener) {
     setButton(id, buttonText, new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -197,6 +224,17 @@ public class MaterialDialog extends Dialog {
     });
   }
 
+  /**
+   * Set a listener to be invoked when the indicated button of the dialog is pressed.
+   * Dialog will dismiss if delegate is null or it returns false.
+   *
+   * @param id Which button to set the text for, can be one of
+   *            {@link DialogInterface#BUTTON_POSITIVE},
+   *            {@link DialogInterface#BUTTON_NEGATIVE}, or
+   *            {@link DialogInterface#BUTTON_NEUTRAL}
+   * @param buttonText The text to display for the button.
+   * @param delegate Click delegate, can be null
+   */
   public void setButton(final int id, CharSequence buttonText, final OnClickDelegate delegate) {
     setButton(id, buttonText, new View.OnClickListener() {
       @Override public void onClick(View v) {
@@ -211,6 +249,17 @@ public class MaterialDialog extends Dialog {
     });
   }
 
+  /**
+   * Set a listener to be invoked when the indicated button of the dialog is pressed.
+   * Dialog will dismiss if delegate is null or it returns false.
+   *
+   * @param id Which button to set the text for, can be one of
+   *            {@link DialogInterface#BUTTON_POSITIVE},
+   *            {@link DialogInterface#BUTTON_NEGATIVE}, or
+   *            {@link DialogInterface#BUTTON_NEUTRAL}
+   * @param buttonText The text to display for the button.
+   * @param listener View.OnClickListener for the button
+   */
   private void setButton(final int id, CharSequence buttonText,
       final View.OnClickListener listener) {
     TextView button;
@@ -446,19 +495,39 @@ public class MaterialDialog extends Dialog {
       return dialog;
     }
 
+    /**
+     * Set a title for the dialog
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setTitle(int titleId) {
       return setTitle(mContext.getText(titleId));
     }
 
+    /**
+     * Set a title for the dialog
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setTitle(CharSequence title) {
       this.title = title;
       return this;
     }
 
+    /**
+     * Set a message to show as the dialog's content
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setMessage(int messageId) {
       return setMessage(mContext.getText(messageId));
     }
 
+    /**
+     * Set a message to show as the dialog's content
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setMessage(CharSequence message) {
       //Message and custom view cannot co-exist
       this.view = null;
@@ -466,15 +535,31 @@ public class MaterialDialog extends Dialog {
       return this;
     }
 
+    /**
+     * Set an icon to show next to the dialog's title
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setIcon(int iconId) {
       return setIcon(mContext.getResources().getDrawable(iconId));
     }
 
+    /**
+     * Set an icon to show next to the dialog's title
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setIcon(Drawable icon) {
       this.icon = icon;
       return this;
     }
 
+    /**
+     * Set the custom view for the dialog.
+     * This will replace any message or list.
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setView(View view) {
       //Message and custom view cannot co-exist
       this.message = null;
@@ -482,113 +567,229 @@ public class MaterialDialog extends Dialog {
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the positive button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setPositiveButton(int textId) {
       return setPositiveButton(mContext.getText(textId));
     }
 
+    /**
+     * Set a listener to be invoked when the positive button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setPositiveButton(CharSequence text) {
       this.positiveText = text;
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the positive button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setPositiveButton(CharSequence text, OnClickListener listener) {
       this.positiveText = text;
       this.positiveListener = listener;
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the positive button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setPositiveButton(int textId, OnClickListener listener) {
       return setPositiveButton(mContext.getText(textId), listener);
     }
 
+    /**
+     * Set a delegate to be invoked when the positive button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setPositiveButton(CharSequence text, OnClickDelegate delegate) {
       this.positiveText = text;
       this.positiveDelegate = delegate;
       return this;
     }
 
+    /**
+     * Set a delegate to be invoked when the positive button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setPositiveButton(int textId, OnClickDelegate delegate) {
       return setPositiveButton(mContext.getText(textId), delegate);
     }
 
+    /**
+     * Set a listener to be invoked when the negative button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNegativeButton(int textId) {
       return setNegativeButton(mContext.getText(textId));
     }
 
+    /**
+     * Set a listener to be invoked when the negative button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNegativeButton(CharSequence text) {
       this.negativeText = text;
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the negative button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNegativeButton(CharSequence text, OnClickListener listener) {
       this.negativeText = text;
       this.negativeListener = listener;
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the negative button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNegativeButton(int textId, OnClickListener listener) {
       return setNegativeButton(mContext.getText(textId), listener);
     }
 
+    /**
+     * Set a delegate to be invoked when the negative button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNegativeButton(CharSequence text, OnClickDelegate delegate) {
       this.negativeText = text;
       this.negativeDelegate = delegate;
       return this;
     }
 
+    /**
+     * Set a delegate to be invoked when the negative button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNegativeButton(int textId, OnClickDelegate delegate) {
       return setNegativeButton(mContext.getText(textId), delegate);
     }
 
+    /**
+     * Set a listener to be invoked when the neutral button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNeutralButton(int textId) {
       return setNeutralButton(mContext.getText(textId));
     }
 
+    /**
+     * Set a listener to be invoked when the neutral button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNeutralButton(CharSequence text) {
       this.neutralText = text;
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the neutral button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNeutralButton(CharSequence text, OnClickListener listener) {
       this.neutralText = text;
       this.neutralListener = listener;
       return this;
     }
 
+    /**
+     * Set a listener to be invoked when the neutral button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNeutralButton(int textId, OnClickListener listener) {
       return setNeutralButton(mContext.getText(textId), listener);
     }
 
+    /**
+     * Set a delegate to be invoked when the neutral button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNeutralButton(CharSequence text, OnClickDelegate delegate) {
       this.neutralText = text;
       this.neutralDelegate = delegate;
       return this;
     }
 
+    /**
+     * Set a delegate to be invoked when the neutral button of the dialog is pressed
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setNeutralButton(int textId, OnClickDelegate delegate) {
       return setNeutralButton(mContext.getText(textId), delegate);
     }
 
+    /**
+     * Set the dialog's {@link android.content.DialogInterface.OnCancelListener}
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setOnCancelListener(OnCancelListener onCancelListener) {
       this.onCancelListener = onCancelListener;
       return this;
     }
 
+    /**
+     * Set the dialog's {@link android.content.DialogInterface.OnDismissListener}
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setOnDismissListener(OnDismissListener onDismissListener) {
       this.onDismissListener = onDismissListener;
       return this;
     }
 
+    /**
+     * Set the dialog's {@link android.content.DialogInterface.OnKeyListener}
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setOnKeyListener(OnKeyListener onKeyListener) {
       this.onKeyListener = onKeyListener;
       return this;
     }
 
+    /**
+     * Set the dialog as cancelable, or not. Default is cancelable
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setCancelable(boolean cancelable) {
       this.cancelable = cancelable;
       return this;
     }
 
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setItems(CharSequence[] items, OnClickListener listener) {
       return setAdapter(
           new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_1, items),
@@ -596,10 +797,26 @@ public class MaterialDialog extends Dialog {
       );
     }
 
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * This should be an array type i.e. R.array.foo
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setItems(int itemsId, OnClickListener listener) {
       return setItems(mContext.getResources().getTextArray(itemsId), listener);
     }
 
+    /**
+     * Set a list of items, which are supplied by the given {@link android.widget.ListAdapter},
+     * to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     *
+     * @param adapter the {@link android.widget.ListAdapter} to supply items
+     * @param listener The listener that will be called when an item is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setAdapter(ListAdapter adapter, OnClickListener listener) {
       this.listType = ListType.ITEMS;
       this.listAdapter = adapter;
@@ -607,6 +824,13 @@ public class MaterialDialog extends Dialog {
       return this;
     }
 
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied delegate.
+     * This should be an array type i.e. R.array.foo
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setItems(CharSequence[] items, OnClickDelegate delegate) {
       return setAdapter(
           new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_1, items),
@@ -614,10 +838,26 @@ public class MaterialDialog extends Dialog {
       );
     }
 
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied delegate
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setItems(int itemsId, OnClickDelegate delegate) {
       return setItems(mContext.getResources().getTextArray(itemsId), delegate);
     }
 
+
+    /**
+     * Set a list of items, which are supplied by the given {@link android.widget.ListAdapter},
+     * to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied delegate.
+     *
+     * @param adapter the {@link android.widget.ListAdapter} to supply items
+     * @param delegate The delegate that will be called when an item is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setAdapter(ListAdapter adapter, OnClickDelegate delegate) {
       this.listType = ListType.ITEMS;
       this.listAdapter = adapter;
@@ -663,6 +903,22 @@ public class MaterialDialog extends Dialog {
       return this;
     }
 
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for each checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param items items to display
+     * @param checkedItems specifies which items are checked.
+     * It should be null in which case no items are checked.
+     * If non null it must be exactly the same length as the array of items
+     * @param listener notified when an item on the list is clicked.
+     * The dialog will not be dismissed when an item is clicked.
+     * It will only be dismissed if clicked on a button,
+     * if no buttons are supplied it's up to the user to dismiss the dialog
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setMultiChoiceItems(CharSequence[] items, boolean[] checkedItems,
         OnMultiChoiceClickListener listener) {
       return setMultiChoiceItems(
@@ -673,12 +929,46 @@ public class MaterialDialog extends Dialog {
       );
     }
 
+
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for each checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param itemsId items to display, e.g. R.array.foo
+     * @param checkedItems specifies which items are checked.
+     * It should be null in which case no items are checked.
+     * If non null it must be exactly the same length as the array of items
+     * @param listener notified when an item on the list is clicked.
+     * The dialog will not be dismissed when an item is clicked.
+     * It will only be dismissed if clicked on a button,
+     * if no buttons are supplied it's up to the user to dismiss the dialog
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setMultiChoiceItems(int itemsId, boolean[] checkedItems,
         OnMultiChoiceClickListener listener) {
       return setMultiChoiceItems(mContext.getResources().getTextArray(itemsId), checkedItems,
           listener);
     }
 
+
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for each checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param adapter adapter to pull items from
+     * @param checkedItems specifies which items are checked.
+     * It should be null in which case no items are checked.
+     * If non null it must be exactly the same length as the array of items
+     * @param listener notified when an item on the list is clicked.
+     * The dialog will not be dismissed when an item is clicked.
+     * It will only be dismissed if clicked on a button,
+     * if no buttons are supplied it's up to the user to dismiss the dialog
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
     public Builder setMultiChoiceItems(ListAdapter adapter, boolean[] checkedItems,
         OnMultiChoiceClickListener listener) {
       this.listType = ListType.MULTI;
