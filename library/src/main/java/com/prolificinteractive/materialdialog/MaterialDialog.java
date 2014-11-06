@@ -354,6 +354,9 @@ public class MaterialDialog extends Dialog {
     private ListAdapter listAdapter;
     private OnMultiChoiceClickListener listMultListener;
 
+    private boolean[] checkedItems = null;
+    private int checkedItem = -1;
+
     /**
      * Constructor using a context for this builder and the
      * {@link com.prolificinteractive.materialdialog.MaterialDialog} it creates
@@ -415,8 +418,14 @@ public class MaterialDialog extends Dialog {
         listView.setAdapter(listAdapter);
         if (listType == ListType.SINGLE) {
           listView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+          listView.setItemChecked(checkedItem, true);
         } else if (listType == ListType.MULTI) {
           listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+          if (checkedItems != null) {
+            for (int i = 0; i < checkedItems.length; i++) {
+              listView.setItemChecked(i, checkedItems[i]);
+            }
+          }
         } else {
           listView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
         }
@@ -865,41 +874,117 @@ public class MaterialDialog extends Dialog {
       return this;
     }
 
-    public Builder setSingleChoiceItems(CharSequence[] items, OnClickDelegate delegate) {
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for the checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param items items to display
+     * @param checkedItem specifies the initially checked item, -1 for none
+     * @param delegate notified when an item on the list is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public Builder setSingleChoiceItems(CharSequence[] items, int checkedItem,
+        OnClickDelegate delegate) {
       return setSingleChoiceItems(
           new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_single_choice,
               items),
+          checkedItem,
           delegate
       );
     }
 
-    public Builder setSingleChoiceItems(int itemsId, OnClickDelegate delegate) {
-      return setSingleChoiceItems(mContext.getResources().getTextArray(itemsId), delegate);
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for the checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param itemsId items to display
+     * @param checkedItem specifies the initially checked item, -1 for none
+     * @param delegate notified when an item on the list is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public Builder setSingleChoiceItems(int itemsId, int checkedItem, OnClickDelegate delegate) {
+      return setSingleChoiceItems(mContext.getResources().getTextArray(itemsId), checkedItem,
+          delegate);
     }
 
-    public Builder setSingleChoiceItems(ListAdapter adapter, OnClickDelegate delegate) {
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for the checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param adapter items to display
+     * @param checkedItem specifies the initially checked item, -1 for none
+     * @param delegate notified when an item on the list is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public Builder setSingleChoiceItems(ListAdapter adapter, int checkedItem,
+        OnClickDelegate delegate) {
       this.listType = ListType.SINGLE;
       this.listAdapter = adapter;
       this.listDelegate = delegate;
+      this.checkedItem = checkedItem;
       return this;
     }
 
-    public Builder setSingleChoiceItems(CharSequence[] items, OnClickListener delegate) {
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for the checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param items items to display
+     * @param checkedItem specifies the initially checked item, -1 for none
+     * @param listener notified when an item on the list is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public Builder setSingleChoiceItems(CharSequence[] items, int checkedItem,
+        OnClickListener listener) {
       return setSingleChoiceItems(
           new ArrayAdapter<CharSequence>(mContext, android.R.layout.simple_list_item_single_choice,
               items),
-          delegate
+          checkedItem,
+          listener
       );
     }
 
-    public Builder setSingleChoiceItems(int itemsId, OnClickListener delegate) {
-      return setSingleChoiceItems(mContext.getResources().getTextArray(itemsId), delegate);
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for the checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param itemsId items to display
+     * @param checkedItem specifies the initially checked item, -1 for none
+     * @param listener notified when an item on the list is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public Builder setSingleChoiceItems(int itemsId, int checkedItem, OnClickListener listener) {
+      return setSingleChoiceItems(mContext.getResources().getTextArray(itemsId), checkedItem,
+          listener);
     }
 
-    public Builder setSingleChoiceItems(ListAdapter adapter, OnClickListener delegate) {
+    /**
+     * Set a list of items to be displayed in the dialog as the content,
+     * you will be notified of the selected item via the supplied listener.
+     * The list will have a check mark displayed to the right of the text for the checked item.
+     * Clicking on an item in the list will not dismiss the dialog.
+     *
+     * @param adapter items to display
+     * @param checkedItem specifies the initially checked item, -1 for none
+     * @param listener notified when an item on the list is clicked
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public Builder setSingleChoiceItems(ListAdapter adapter, int checkedItem,
+        OnClickListener listener) {
       this.listType = ListType.SINGLE;
       this.listAdapter = adapter;
-      this.listListener = delegate;
+      this.listListener = listener;
+      this.checkedItem = checkedItem;
       return this;
     }
 
@@ -974,9 +1059,13 @@ public class MaterialDialog extends Dialog {
       this.listType = ListType.MULTI;
       this.listAdapter = adapter;
       this.listMultListener = listener;
+      this.checkedItems = checkedItems;
       return this;
     }
 
+    /**
+     * Type of list selection method to implement
+     */
     private static enum ListType {
       NONE, ITEMS, SINGLE, MULTI
     }

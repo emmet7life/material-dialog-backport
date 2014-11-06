@@ -122,9 +122,13 @@ public class MainActivity extends Activity {
   }
 
   @OnClick(R.id.button_system_list_multi) void systemListMulti() {
+    CharSequence[] items = getResources().getTextArray(R.array.items);
+    boolean[] checked = new boolean[items.length];
+    checked[1] = true;
+    checked[4] = true;
     new AlertDialog.Builder(MainActivity.this)
         .setTitle("List Items")
-        .setMultiChoiceItems(R.array.items, null, new DialogInterface.OnMultiChoiceClickListener() {
+        .setMultiChoiceItems(items, checked, new DialogInterface.OnMultiChoiceClickListener() {
           @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
             Toast.makeText(MainActivity.this, "Item " + which + " " + isChecked, Toast.LENGTH_SHORT)
                 .show();
@@ -135,9 +139,13 @@ public class MainActivity extends Activity {
   }
 
   @OnClick(R.id.button_material_list_multi) void backportListMulti() {
+    CharSequence[] items = getResources().getTextArray(R.array.items);
+    boolean[] checked = new boolean[items.length];
+    checked[1] = true;
+    checked[4] = true;
     new MaterialDialog.Builder(MainActivity.this)
         .setTitle("List Items")
-        .setMultiChoiceItems(R.array.items, null, new DialogInterface.OnMultiChoiceClickListener() {
+        .setMultiChoiceItems(items, checked, new DialogInterface.OnMultiChoiceClickListener() {
           @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
             Toast.makeText(MainActivity.this, "Item " + which + " " + isChecked, Toast.LENGTH_SHORT)
                 .show();
