@@ -76,7 +76,7 @@ public class MaterialDialog extends Dialog {
     messageView = (TextView) findViewById(R.id.mdb__message);
     noButtonSpacer = findViewById(R.id.mdb__textSpacerNoButtons);
 
-    customContainer = (ViewGroup) findViewById(R.id.mdb__custom);
+    customContainer = (ViewGroup) findViewById(android.R.id.custom);
     listView = (ListView) findViewById(R.id.mdb__list);
     scrollView = (ScrollView) findViewById(R.id.mdb__scroll);
 
