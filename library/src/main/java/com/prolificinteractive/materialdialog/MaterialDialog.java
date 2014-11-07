@@ -30,7 +30,7 @@ public class MaterialDialog extends Dialog {
   private final LinearLayout topPanel;
   private final LinearLayout contentPanel;
   private final FrameLayout customPanel;
-  private final LinearLayout buttonPanel;
+  private final ViewGroup buttonPanel;
 
   private final ImageView icon;
   private final TextView title;
@@ -69,7 +69,7 @@ public class MaterialDialog extends Dialog {
     topPanel = (LinearLayout) findViewById(R.id.mdb__topPanel);
     contentPanel = (LinearLayout) findViewById(R.id.mdb__contentPanel);
     customPanel = (FrameLayout) findViewById(R.id.mdb__customPanel);
-    buttonPanel = (LinearLayout) findViewById(R.id.mdb__buttonPanel);
+    buttonPanel = (ViewGroup) findViewById(R.id.mdb__buttonPanel);
 
     icon = (ImageView) findViewById(android.R.id.icon);
     title = (TextView) findViewById(R.id.mdb__title);
