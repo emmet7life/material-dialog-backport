@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -96,6 +97,7 @@ public class MaterialDialog extends Dialog {
 
   /**
    * Set the title text for this dialog
+   *
    * @param titleId The resource id for the title
    */
   @Override public void setTitle(int titleId) {
@@ -104,6 +106,7 @@ public class MaterialDialog extends Dialog {
 
   /**
    * Set the title text for this dialog
+   *
    * @param title The new text for the title
    */
   @Override public void setTitle(CharSequence title) {
@@ -125,6 +128,7 @@ public class MaterialDialog extends Dialog {
 
   /**
    * Display a message as the dialog contents
+   *
    * @param messageId the resource id for the message
    */
   public void setMessage(int messageId) {
@@ -133,6 +137,7 @@ public class MaterialDialog extends Dialog {
 
   /**
    * Display a message as the dialog contents
+   *
    * @param message the new text for the message
    */
   public void setMessage(CharSequence message) {
@@ -142,6 +147,7 @@ public class MaterialDialog extends Dialog {
 
   /**
    * Set resId to 0 if you don't want an icon
+   *
    * @param iconId the resourceId of the drawable to use as the icon or 0 if you don't want an icon
    */
   public void setIcon(int iconId) {
@@ -162,6 +168,7 @@ public class MaterialDialog extends Dialog {
 
   /**
    * Set the view to display in that dialog
+   *
    * @param view the View
    */
   public void setView(View view) {
@@ -212,9 +219,9 @@ public class MaterialDialog extends Dialog {
    * Dialog will be dismissed after listener is called
    *
    * @param id Which button to set the text for, can be one of
-   *            {@link DialogInterface#BUTTON_POSITIVE},
-   *            {@link DialogInterface#BUTTON_NEGATIVE}, or
-   *            {@link DialogInterface#BUTTON_NEUTRAL}
+   * {@link DialogInterface#BUTTON_POSITIVE},
+   * {@link DialogInterface#BUTTON_NEGATIVE}, or
+   * {@link DialogInterface#BUTTON_NEUTRAL}
    * @param buttonText The text to display for the button.
    * @param listener Click listener, can be null
    */
@@ -234,9 +241,9 @@ public class MaterialDialog extends Dialog {
    * Dialog will dismiss if delegate is null or it returns false.
    *
    * @param id Which button to set the text for, can be one of
-   *            {@link DialogInterface#BUTTON_POSITIVE},
-   *            {@link DialogInterface#BUTTON_NEGATIVE}, or
-   *            {@link DialogInterface#BUTTON_NEUTRAL}
+   * {@link DialogInterface#BUTTON_POSITIVE},
+   * {@link DialogInterface#BUTTON_NEGATIVE}, or
+   * {@link DialogInterface#BUTTON_NEUTRAL}
    * @param buttonText The text to display for the button.
    * @param delegate Click delegate, can be null
    */
@@ -259,9 +266,9 @@ public class MaterialDialog extends Dialog {
    * Dialog will dismiss if delegate is null or it returns false.
    *
    * @param id Which button to set the text for, can be one of
-   *            {@link DialogInterface#BUTTON_POSITIVE},
-   *            {@link DialogInterface#BUTTON_NEGATIVE}, or
-   *            {@link DialogInterface#BUTTON_NEUTRAL}
+   * {@link DialogInterface#BUTTON_POSITIVE},
+   * {@link DialogInterface#BUTTON_NEGATIVE}, or
+   * {@link DialogInterface#BUTTON_NEUTRAL}
    * @param buttonText The text to display for the button.
    * @param listener View.OnClickListener for the button
    */
@@ -388,7 +395,9 @@ public class MaterialDialog extends Dialog {
     /**
      * Returns a Context with the appropriate theme for dialogs created by this Builder.
      * Applications should use this Context for obtaining LayoutInflaters for inflating views
-     * that will be used in the resulting dialogs, as it will cause views to be inflated with the correct theme
+     * that will be used in the resulting dialogs, as it will cause views to be inflated with the
+     * correct theme
+     *
      * @return A Context for built Dialogs
      */
     public Context getContext() {
@@ -574,6 +583,16 @@ public class MaterialDialog extends Dialog {
     public Builder setView(View view) {
       this.view = view;
       return this;
+    }
+
+    /**
+     * Set the custom view for the dialog.
+     * This will replace any message or list.
+     *
+     * @return This Builder object to allow for chaining of calls to set methods
+     */
+    public void setView(int layoutId) {
+      setView(LayoutInflater.from(getContext()).inflate(layoutId, null));
     }
 
     /**
@@ -857,7 +876,6 @@ public class MaterialDialog extends Dialog {
       return setItems(mContext.getResources().getTextArray(itemsId), delegate);
     }
 
-
     /**
      * Set a list of items, which are supplied by the given {@link android.widget.ListAdapter},
      * to be displayed in the dialog as the content,
@@ -1014,7 +1032,6 @@ public class MaterialDialog extends Dialog {
       );
     }
 
-
     /**
      * Set a list of items to be displayed in the dialog as the content,
      * you will be notified of the selected item via the supplied listener.
@@ -1036,7 +1053,6 @@ public class MaterialDialog extends Dialog {
       return setMultiChoiceItems(mContext.getResources().getTextArray(itemsId), checkedItems,
           listener);
     }
-
 
     /**
      * Set a list of items to be displayed in the dialog as the content,

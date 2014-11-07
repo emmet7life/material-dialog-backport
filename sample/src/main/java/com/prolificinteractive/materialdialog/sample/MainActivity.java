@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
   @InjectView(R.id.edit_message) EditText editMessage;
   @InjectView(R.id.icon_type) Spinner iconTypes;
   @InjectView(R.id.list_type) Spinner listTypes;
+  @InjectView(R.id.check_custom_view) CheckBox checkCustom;
   @InjectView(R.id.check_button_positive) CheckBox checkPositive;
   @InjectView(R.id.check_button_negative) CheckBox checkNegative;
   @InjectView(R.id.check_button_neutral) CheckBox checkNeutral;
@@ -70,6 +71,9 @@ public class MainActivity extends Activity {
         break;
       default:
         break;
+    }
+    if (checkCustom.isChecked()) {
+      builder.setView(getLayoutInflater().inflate(R.layout.dialog_contents, null));
     }
     if (checkPositive.isChecked()) {
       builder.setPositiveButton("Yes", new TestClickListener(this));
@@ -120,6 +124,9 @@ public class MainActivity extends Activity {
         break;
       default:
         break;
+    }
+    if (checkCustom.isChecked()) {
+      builder.setView(getLayoutInflater().inflate(R.layout.dialog_contents, null));
     }
     if (checkPositive.isChecked()) {
       builder.setPositiveButton("Yes", new TestClickListener(this));

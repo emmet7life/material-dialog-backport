@@ -71,6 +71,15 @@
         />
 
     <CheckBox
+        android:layout_marginTop="16dp"
+        android:text="Set a Custom View"
+        android:id="@+id/check_custom_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <CheckBox
+        android:layout_marginTop="16dp"
         android:text="Yes Button (Positive)"
         android:id="@+id/check_button_positive"
         android:layout_width="wrap_content"
