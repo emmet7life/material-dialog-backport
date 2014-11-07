@@ -32,9 +32,9 @@ public class MaterialDialog extends Dialog {
   private final FrameLayout customPanel;
   private final ViewGroup buttonPanel;
 
-  private final ImageView icon;
-  private final TextView title;
-  private final TextView message;
+  private final ImageView iconView;
+  private final TextView titleView;
+  private final TextView messageView;
   private final View noButtonSpacer;
 
   private final TextView buttonPositive;
@@ -71,9 +71,9 @@ public class MaterialDialog extends Dialog {
     customPanel = (FrameLayout) findViewById(R.id.mdb__customPanel);
     buttonPanel = (ViewGroup) findViewById(R.id.mdb__buttonPanel);
 
-    icon = (ImageView) findViewById(android.R.id.icon);
-    title = (TextView) findViewById(R.id.mdb__title);
-    message = (TextView) findViewById(R.id.mdb__message);
+    iconView = (ImageView) findViewById(android.R.id.icon);
+    titleView = (TextView) findViewById(R.id.mdb__title);
+    messageView = (TextView) findViewById(R.id.mdb__message);
     noButtonSpacer = findViewById(R.id.mdb__textSpacerNoButtons);
 
     customContainer = (ViewGroup) findViewById(R.id.mdb__custom);
@@ -99,7 +99,7 @@ public class MaterialDialog extends Dialog {
    * @param titleId The resource id for the title
    */
   @Override public void setTitle(int titleId) {
-    this.setTitle(getContext().getResources().getText(titleId));
+    setTitle(getContext().getResources().getText(titleId));
   }
 
   /**
@@ -107,7 +107,7 @@ public class MaterialDialog extends Dialog {
    * @param title The new text for the title
    */
   @Override public void setTitle(CharSequence title) {
-    this.title.setText(title);
+    titleView.setText(title);
     setTopPanelVisibility();
   }
 
@@ -115,10 +115,10 @@ public class MaterialDialog extends Dialog {
    * Correctly set top panel visibilities
    */
   private void setTopPanelVisibility() {
-    icon.setVisibility(icon.getDrawable() != null ? View.VISIBLE : View.GONE);
-    title.setVisibility(TextUtils.isEmpty(title.getText()) ? View.GONE : View.VISIBLE);
+    iconView.setVisibility(iconView.getDrawable() != null ? View.VISIBLE : View.GONE);
+    titleView.setVisibility(TextUtils.isEmpty(titleView.getText()) ? View.GONE : View.VISIBLE);
     topPanel.setVisibility(
-        icon.getVisibility() == View.VISIBLE || title.getVisibility() == View.VISIBLE ?
+        iconView.getVisibility() == View.VISIBLE || titleView.getVisibility() == View.VISIBLE ?
             View.VISIBLE : View.GONE
     );
   }
@@ -136,7 +136,7 @@ public class MaterialDialog extends Dialog {
    * @param message the new text for the message
    */
   public void setMessage(CharSequence message) {
-    this.message.setText(message);
+    messageView.setText(message);
     setContentPanelsVisibility();
   }
 
@@ -156,7 +156,7 @@ public class MaterialDialog extends Dialog {
    * @param icon the icon to display, null if none
    */
   public void setIcon(Drawable icon) {
-    this.icon.setImageDrawable(icon);
+    iconView.setImageDrawable(icon);
     setTopPanelVisibility();
   }
 
@@ -180,11 +180,11 @@ public class MaterialDialog extends Dialog {
     customPanel.setVisibility(hasCustomView ? View.VISIBLE : View.GONE);
     contentPanel.setVisibility(hasCustomView ? View.GONE : View.VISIBLE);
     if (!hasCustomView) {
-      if (TextUtils.isEmpty(message.getText())) {
-        this.message.setVisibility(View.GONE);
+      if (TextUtils.isEmpty(messageView.getText())) {
+        messageView.setVisibility(View.GONE);
         listView.setVisibility(listView.getAdapter() != null ? View.VISIBLE : View.GONE);
       } else {
-        this.message.setVisibility(View.VISIBLE);
+        messageView.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
       }
     }
