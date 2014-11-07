@@ -121,6 +121,30 @@ public class MainActivity extends Activity {
         .show();
   }
 
+  @OnClick(R.id.button_system_list_single) void systemListSingle() {
+    new AlertDialog.Builder(MainActivity.this)
+        .setTitle("List Items")
+        .setSingleChoiceItems(R.array.items, 2, new DialogInterface.OnClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which) {
+            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
+          }
+        })
+        .setPositiveButton(android.R.string.ok, null)
+        .show();
+  }
+
+  @OnClick(R.id.button_material_list_single) void backportListSingle() {
+    new MaterialDialog.Builder(MainActivity.this)
+        .setTitle("List Items")
+        .setSingleChoiceItems(R.array.items, 2, new DialogInterface.OnClickListener() {
+          @Override public void onClick(DialogInterface dialog, int which) {
+            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
+          }
+        })
+        .setPositiveButton(android.R.string.ok)
+        .show();
+  }
+
   @OnClick(R.id.button_system_list_multi) void systemListMulti() {
     CharSequence[] items = getResources().getTextArray(R.array.items);
     boolean[] checked = new boolean[items.length];

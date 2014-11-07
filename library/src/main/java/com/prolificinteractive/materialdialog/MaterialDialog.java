@@ -442,10 +442,9 @@ public class MaterialDialog extends Dialog {
           listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override public void onItemClick(AdapterView<?> parent, View view, int position,
                 long id) {
-              boolean handled = listType == ListType.ITEMS;
+              boolean handled = listType == ListType.SINGLE;
               if (listListener != null) {
                 listListener.onClick(dialog, position);
-                dialog.dismiss();
               } else if (listDelegate != null) {
                 handled = listDelegate.onClick(dialog, position);
               }
