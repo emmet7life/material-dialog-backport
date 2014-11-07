@@ -2,16 +2,29 @@ package com.prolificinteractive.materialdialog.sample;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import com.prolificinteractive.materialdialog.MaterialDialog;
 
 public class MainActivity extends Activity {
+
+  @InjectView(R.id.edit_title) EditText editTitle;
+  @InjectView(R.id.edit_message) EditText editMessage;
+  @InjectView(R.id.icon_type) Spinner iconTypes;
+  @InjectView(R.id.list_type) Spinner listTypes;
+  @InjectView(R.id.check_button_positive) CheckBox checkPositive;
+  @InjectView(R.id.check_button_negative) CheckBox checkNegative;
+  @InjectView(R.id.check_button_neutral) CheckBox checkNeutral;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -20,163 +33,104 @@ public class MainActivity extends Activity {
     ButterKnife.inject(this);
   }
 
-  @OnClick(R.id.button_system_basic) void systemBasic() {
-    new AlertDialog.Builder(this)
-        .setTitle("Test Title")
-        .setMessage("This is a test message")
-        .setPositiveButton(android.R.string.ok, null)
-        .setNegativeButton(android.R.string.cancel, null)
-        .show();
+  @OnClick(R.id.button_system) void onSystemClicked() {
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    if (!editTitle.getText().toString().trim().isEmpty()) {
+      builder.setTitle(editTitle.getText().toString());
+    }
+    if (!editMessage.getText().toString().trim().isEmpty()) {
+      builder.setMessage(editMessage.getText().toString());
+    }
+    switch (iconTypes.getSelectedItemPosition()) {
+      case 1:
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        break;
+      case 2:
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        break;
+      default:
+        break;
+    }
+    switch (listTypes.getSelectedItemPosition()) {
+      case 1:
+        builder.setItems(R.array.sample_items, new TestClickListener(this));
+        break;
+      case 2:
+        builder.setSingleChoiceItems(R.array.sample_items, 0, new TestClickListener(this));
+        break;
+      case 3:
+        builder.setMultiChoiceItems(R.array.sample_items, null,
+            new DialogInterface.OnMultiChoiceClickListener() {
+              @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                Toast.makeText(MainActivity.this,
+                    "Item Clicked: " + which + " - Selected ? " + isChecked, Toast.LENGTH_SHORT)
+                    .show();
+              }
+            });
+        break;
+      default:
+        break;
+    }
+    if (checkPositive.isChecked()) {
+      builder.setPositiveButton("Yes", new TestClickListener(this));
+    }
+    if (checkNegative.isChecked()) {
+      builder.setNegativeButton("No", new TestClickListener(this));
+    }
+    if (checkNeutral.isChecked()) {
+      builder.setNeutralButton("Cancel", new TestClickListener(this));
+    }
+    builder.show();
   }
 
-  @OnClick(R.id.button_material_basic) void backportBasic() {
-    new MaterialDialog.Builder(MainActivity.this)
-        .setTitle("Test Title")
-        .setMessage("This is a test message")
-        .setPositiveButton(android.R.string.ok)
-        .setNegativeButton(android.R.string.cancel)
-        .show();
-  }
-
-  @OnClick(R.id.button_system_content) void systemContent() {
-    new AlertDialog.Builder(MainActivity.this)
-        .setTitle("Send Mailer")
-        .setMessage("Please enter your email address")
-        .setView(getLayoutInflater().inflate(R.layout.dialog_contents, null))
-        .setPositiveButton("Save", null)
-        .setNegativeButton("Cancel", null)
-        .setNeutralButton("Save Draft", new DialogInterface.OnClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which) {
-            Toast.makeText(MainActivity.this, "Draft Saved", Toast.LENGTH_SHORT).show();
-          }
-        })
-        .show();
-  }
-
-  @OnClick(R.id.button_material_content) void backportContent() {
-    new MaterialDialog.Builder(MainActivity.this)
-        .setTitle("Send Mailer")
-        .setMessage("Please enter your email address")
-        .setView(getLayoutInflater().inflate(R.layout.dialog_contents, null))
-        .setPositiveButton("Save")
-        .setNegativeButton("Cancel")
-        .setNeutralButton("Save Draft", new MaterialDialog.OnClickDelegate() {
-          @Override public boolean onClick(MaterialDialog dialog, int which) {
-            Toast.makeText(dialog.getContext(), "Draft Saved", Toast.LENGTH_SHORT).show();
-            return true;
-          }
-        })
-        .show();
-  }
-
-  @OnClick(R.id.button_system_themed) void systemThemed() {
-    new AlertDialog.Builder(MainActivity.this, AlertDialog.THEME_DEVICE_DEFAULT_DARK)
-        .setIcon(android.R.drawable.ic_dialog_info)
-        .setTitle("Test Title")
-        .setMessage("Test Message")
-        .setPositiveButton(android.R.string.ok, null)
-        .setNegativeButton(android.R.string.cancel, null)
-        .show();
-  }
-
-  @OnClick(R.id.button_material_themed) void backportThemed() {
-    new MaterialDialog.Builder(MainActivity.this, R.style.Theme_MaterialDialog_Dark)
-        .setIcon(android.R.drawable.ic_dialog_info)
-        .setTitle("Test Title")
-        .setMessage("Test Message")
-        .setPositiveButton(android.R.string.ok)
-        .setNegativeButton(android.R.string.cancel)
-        .show();
-  }
-
-  @OnClick(R.id.button_system_blank) void systemBlank() {
-    new AlertDialog.Builder(MainActivity.this).show();
-  }
-
-  @OnClick(R.id.button_material_blank) void backportBlank() {
-    new MaterialDialog.Builder(MainActivity.this).show();
-  }
-
-  @OnClick(R.id.button_system_list) void systemList() {
-    new AlertDialog.Builder(MainActivity.this)
-        .setTitle("List Items")
-        .setItems(R.array.items, new DialogInterface.OnClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which) {
-            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
-          }
-        })
-        .setPositiveButton(android.R.string.ok, null)
-        .show();
-  }
-
-  @OnClick(R.id.button_material_list) void backportList() {
-    new MaterialDialog.Builder(MainActivity.this)
-        .setTitle("List Items")
-        .setItems(R.array.items, new DialogInterface.OnClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which) {
-            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
-          }
-        })
-        .setPositiveButton(android.R.string.ok)
-        .show();
-  }
-
-  @OnClick(R.id.button_system_list_single) void systemListSingle() {
-    new AlertDialog.Builder(MainActivity.this)
-        .setTitle("List Items")
-        .setSingleChoiceItems(R.array.items, 2, new DialogInterface.OnClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which) {
-            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
-          }
-        })
-        .setPositiveButton(android.R.string.ok, null)
-        .show();
-  }
-
-  @OnClick(R.id.button_material_list_single) void backportListSingle() {
-    new MaterialDialog.Builder(MainActivity.this)
-        .setTitle("List Items")
-        .setSingleChoiceItems(R.array.items, 2, new DialogInterface.OnClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which) {
-            Toast.makeText(MainActivity.this, "Item " + which, Toast.LENGTH_SHORT).show();
-          }
-        })
-        .setPositiveButton(android.R.string.ok)
-        .show();
-  }
-
-  @OnClick(R.id.button_system_list_multi) void systemListMulti() {
-    CharSequence[] items = getResources().getTextArray(R.array.items);
-    boolean[] checked = new boolean[items.length];
-    checked[1] = true;
-    checked[4] = true;
-    new AlertDialog.Builder(MainActivity.this)
-        .setTitle("List Items")
-        .setMultiChoiceItems(items, checked, new DialogInterface.OnMultiChoiceClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-            Toast.makeText(MainActivity.this, "Item " + which + " " + isChecked, Toast.LENGTH_SHORT)
-                .show();
-          }
-        })
-        .setPositiveButton(android.R.string.ok, null)
-        .show();
-  }
-
-  @OnClick(R.id.button_material_list_multi) void backportListMulti() {
-    CharSequence[] items = getResources().getTextArray(R.array.items);
-    boolean[] checked = new boolean[items.length];
-    checked[1] = true;
-    checked[4] = true;
-    new MaterialDialog.Builder(MainActivity.this)
-        .setTitle("List Items")
-        .setMultiChoiceItems(items, checked, new DialogInterface.OnMultiChoiceClickListener() {
-          @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-            Toast.makeText(MainActivity.this, "Item " + which + " " + isChecked, Toast.LENGTH_SHORT)
-                .show();
-          }
-        })
-        .setPositiveButton(android.R.string.ok)
-        .show();
+  @OnClick(R.id.button_material) void onBackportClicked() {
+    MaterialDialog.Builder builder = new MaterialDialog.Builder(this);
+    if (!editTitle.getText().toString().trim().isEmpty()) {
+      builder.setTitle(editTitle.getText().toString());
+    }
+    if (!editMessage.getText().toString().trim().isEmpty()) {
+      builder.setMessage(editMessage.getText().toString());
+    }
+    switch (iconTypes.getSelectedItemPosition()) {
+      case 1:
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        break;
+      case 2:
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        break;
+      default:
+        break;
+    }
+    switch (listTypes.getSelectedItemPosition()) {
+      case 1:
+        builder.setItems(R.array.sample_items, new TestClickListener(this));
+        break;
+      case 2:
+        builder.setSingleChoiceItems(R.array.sample_items, 0, new TestClickListener(this));
+        break;
+      case 3:
+        builder.setMultiChoiceItems(R.array.sample_items, null,
+            new DialogInterface.OnMultiChoiceClickListener() {
+              @Override public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                Toast.makeText(MainActivity.this,
+                    "Item Clicked: " + which + " - Selected ? " + isChecked, Toast.LENGTH_SHORT)
+                    .show();
+              }
+            });
+        break;
+      default:
+        break;
+    }
+    if (checkPositive.isChecked()) {
+      builder.setPositiveButton("Yes", new TestClickListener(this));
+    }
+    if (checkNegative.isChecked()) {
+      builder.setNegativeButton("No", new TestClickListener(this));
+    }
+    if (checkNeutral.isChecked()) {
+      builder.setNeutralButton("Cancel", new TestClickListener(this));
+    }
+    builder.show();
   }
 
   @Override
@@ -195,5 +149,18 @@ public class MainActivity extends Activity {
     }
 
     return super.onOptionsItemSelected(item);
+  }
+
+  private static class TestClickListener implements DialogInterface.OnClickListener {
+
+    private final Context context;
+
+    public TestClickListener(Context context) {
+      this.context = context;
+    }
+
+    @Override public void onClick(DialogInterface dialog, int which) {
+      Toast.makeText(context, "Item Clicked: " + which, Toast.LENGTH_SHORT).show();
+    }
   }
 }

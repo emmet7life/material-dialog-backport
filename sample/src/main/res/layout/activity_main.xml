@@ -16,109 +16,90 @@
       >
 
     <TextView
-        android:text="Basic Dialog"
+        android:text="Title:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <EditText
+        android:id="@+id/edit_title"
+        android:hint="Dialog Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-
-      <Button
-          android:id="@+id/button_system_basic"
-          android:text="System"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-      <Button
-          android:id="@+id/button_material_basic"
-          android:text="Backport"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-    </LinearLayout>
+        />
 
     <TextView
-        android:text="Dialog with Message and Custom View"
+        android:layout_marginTop="16dp"
+        android:text="Message:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <EditText
+        android:id="@+id/edit_message"
+        android:hint="Dialog Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-
-      <Button
-          android:id="@+id/button_system_content"
-          android:text="System"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-      <Button
-          android:id="@+id/button_material_content"
-          android:text="Backport"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-    </LinearLayout>
+        />
 
     <TextView
-        android:text="Basic Dialog with Theme"
+        android:layout_marginTop="16dp"
+        android:text="Title Icon:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <Spinner
+        android:id="@+id/icon_type"
+        android:entries="@array/icon_types"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-
-      <Button
-          android:id="@+id/button_system_themed"
-          android:text="System"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-      <Button
-          android:id="@+id/button_material_themed"
-          android:text="Backport"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-    </LinearLayout>
+        />
 
     <TextView
-        android:text="Dialog with Nothing Set"
+        android:layout_marginTop="16dp"
+        android:text="List Type:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <Spinner
+        android:id="@+id/list_type"
+        android:entries="@array/list_types"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <CheckBox
+        android:text="Yes Button (Positive)"
+        android:id="@+id/check_button_positive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <CheckBox
+        android:text="No Button (Negative)"
+        android:id="@+id/check_button_negative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
+    <CheckBox
+        android:text="Cancel Button (Neutral)"
+        android:id="@+id/check_button_neutral"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
 
     <LinearLayout
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
 
       <Button
-          android:id="@+id/button_system_blank"
+          android:id="@+id/button_system"
           android:text="System"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
@@ -126,97 +107,7 @@
           />
 
       <Button
-          android:id="@+id/button_material_blank"
-          android:text="Backport"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-    </LinearLayout>
-
-    <TextView
-        android:text="Dialog with List Items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-      <Button
-          android:id="@+id/button_system_list"
-          android:text="System"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-      <Button
-          android:id="@+id/button_material_list"
-          android:text="Backport"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-    </LinearLayout>
-
-    <TextView
-        android:text="Dialog with Single List Items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-      <Button
-          android:id="@+id/button_system_list_single"
-          android:text="System"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-      <Button
-          android:id="@+id/button_material_list_single"
-          android:text="Backport"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-    </LinearLayout>
-
-    <TextView
-        android:text="Dialog with Multi List Items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-
-      <Button
-          android:id="@+id/button_system_list_multi"
-          android:text="System"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          />
-
-      <Button
-          android:id="@+id/button_material_list_multi"
+          android:id="@+id/button_material"
           android:text="Backport"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
