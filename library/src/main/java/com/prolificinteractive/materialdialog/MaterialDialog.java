@@ -180,8 +180,13 @@ public class MaterialDialog extends Dialog {
     customPanel.setVisibility(hasCustomView ? View.VISIBLE : View.GONE);
     contentPanel.setVisibility(hasCustomView ? View.GONE : View.VISIBLE);
     if (!hasCustomView) {
-      this.message.setVisibility(TextUtils.isEmpty(message.getText()) ? View.GONE : View.VISIBLE);
-      listView.setVisibility(listView.getAdapter() != null ? View.VISIBLE : View.GONE);
+      if (TextUtils.isEmpty(message.getText())) {
+        this.message.setVisibility(View.GONE);
+        listView.setVisibility(listView.getAdapter() != null ? View.VISIBLE : View.GONE);
+      } else {
+        this.message.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+      }
     }
   }
 
@@ -537,8 +542,6 @@ public class MaterialDialog extends Dialog {
      * @return This Builder object to allow for chaining of calls to set methods
      */
     public Builder setMessage(CharSequence message) {
-      //Message and custom view cannot co-exist
-      this.view = null;
       this.message = message;
       return this;
     }
@@ -569,8 +572,6 @@ public class MaterialDialog extends Dialog {
      * @return This Builder object to allow for chaining of calls to set methods
      */
     public Builder setView(View view) {
-      //Message and custom view cannot co-exist
-      this.message = null;
       this.view = view;
       return this;
     }
